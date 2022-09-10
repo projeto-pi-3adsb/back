@@ -1,13 +1,13 @@
-package br.com.hemomanager.hemoapp;
+package com.example.start.hemomanager;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class HemoAppApplication {
+public class Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(HemoAppApplication.class, args);
+		SpringApplication.run(Application.class, args);
 	}
 
 }

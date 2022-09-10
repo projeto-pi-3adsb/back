@@ -1,10 +1,10 @@
-package br.com.hemomanager.hemoapp;
+package com.example.start.hemomanager;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class HemoAppApplicationTests {
+class ApplicationTests {
 
 	@Test
 	void contextLoads() {
