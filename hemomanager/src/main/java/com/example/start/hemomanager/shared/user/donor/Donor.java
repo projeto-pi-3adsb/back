@@ -1,6 +1,6 @@
-package com.example.start.hemomanager.controllers.user.donor;
-import com.example.start.hemomanager.controllers.enumerators.BloodType;
-import com.example.start.hemomanager.controllers.user.User;
+package com.example.start.hemomanager.shared.user.donor;
+import com.example.start.hemomanager.shared.enumerators.BloodType;
+import com.example.start.hemomanager.shared.user.User;
 
 import java.util.Date;
 import java.util.UUID;
