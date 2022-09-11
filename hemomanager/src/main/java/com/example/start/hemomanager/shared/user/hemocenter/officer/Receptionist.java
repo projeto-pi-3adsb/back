@@ -1,4 +1,4 @@
-package com.example.start.hemomanager.controllers.user.hemocenter.officer;
+package com.example.start.hemomanager.shared.user.hemocenter.officer;
 
 import java.util.UUID;
 

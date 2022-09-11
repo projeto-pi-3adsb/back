@@ -1,6 +1,6 @@
-package com.example.start.hemomanager.controllers.user.hemocenter.officer;
-import com.example.start.hemomanager.controllers.enumerators.BloodType;
-import com.example.start.hemomanager.controllers.stock.Stock;
+package com.example.start.hemomanager.shared.user.hemocenter.officer;
+import com.example.start.hemomanager.shared.enumerators.BloodType;
+import com.example.start.hemomanager.shared.stock.Stock;
 
 import java.util.UUID;
 
