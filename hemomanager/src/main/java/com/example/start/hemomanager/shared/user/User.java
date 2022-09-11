@@ -1,4 +1,4 @@
-package com.example.start.hemomanager.controllers.user;
+package com.example.start.hemomanager.shared.user;
 
 import java.util.UUID;
 
@@ -55,7 +55,7 @@ public abstract class User {
         boolean auth = email.equals(this.email) && password.equals(this.password);
         setLogged(auth);
         return auth;
-    };
+    }
 
     public abstract boolean doLogin();
     public abstract boolean doLogout();

@@ -1,6 +1,6 @@
-package com.example.start.hemomanager.controllers.user.hemocenter.officer;
+package com.example.start.hemomanager.shared.user.hemocenter.officer;
+import com.example.start.hemomanager.shared.user.User;
 
-import com.example.start.hemomanager.controllers.user.User;
 import java.util.UUID;
 
 public abstract class Officer extends User {
@@ -9,6 +9,12 @@ public abstract class Officer extends User {
     public Officer(UUID uuid, String name, String cpfCnpj, String email, String password, boolean logged, boolean admin) {
         super(uuid, name, cpfCnpj, email, password, logged);
         this.admin = admin;
+    }
+
+    public boolean authenticateOfficer(String email, String password){
+        boolean auth = email.equals(super.getEmail()) && password.equals(super.getPassword());
+        setLogged(auth);
+        return auth;
     }
 
     public boolean isAdmin() {
