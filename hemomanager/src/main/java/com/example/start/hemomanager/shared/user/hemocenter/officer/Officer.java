@@ -1,8 +1,9 @@
 package com.example.start.hemomanager.shared.user.hemocenter.officer;
 import com.example.start.hemomanager.shared.user.User;
-
+import javax.persistence.MappedSuperclass;
 import java.util.UUID;
 
+@MappedSuperclass
 public abstract class Officer extends User {
     private boolean admin;
 

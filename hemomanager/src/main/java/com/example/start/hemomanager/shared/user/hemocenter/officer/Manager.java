@@ -2,8 +2,10 @@ package com.example.start.hemomanager.shared.user.hemocenter.officer;
 import com.example.start.hemomanager.shared.enumerators.BloodType;
 import com.example.start.hemomanager.shared.stock.Stock;
 
+import javax.persistence.Entity;
 import java.util.UUID;
 
+@Entity
 public class Manager extends Officer implements Stock {
 
     public Manager(UUID uuid, String name, String cpfCnpj, String email, String password, boolean logged, boolean admin) {

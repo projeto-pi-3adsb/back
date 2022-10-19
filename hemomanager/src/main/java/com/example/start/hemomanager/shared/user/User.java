@@ -1,12 +1,30 @@
 package com.example.start.hemomanager.shared.user;
 
+import org.hibernate.validator.constraints.br.CNPJ;
+import org.hibernate.validator.constraints.br.CPF;
 import java.util.UUID;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
+@MappedSuperclass
 public abstract class User {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private UUID uuid;
+
+    @NotBlank
     private String name;
+
+    @NotBlank @CPF @CNPJ
     private String cpfCnpj;
+
+    @NotBlank @Email
     private String email;
+
+    @NotBlank
     private String password;
     private boolean logged;
 
