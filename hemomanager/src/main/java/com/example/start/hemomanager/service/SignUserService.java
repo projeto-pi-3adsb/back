@@ -1,5 +1,6 @@
 package com.example.start.hemomanager.service;
 
+import com.example.start.hemomanager.listaObj.ListaObj;
 import com.example.start.hemomanager.shared.user.User;
 import com.example.start.hemomanager.shared.user.donor.Donor;
 import com.example.start.hemomanager.shared.user.hemocenter.officer.Manager;
@@ -15,7 +16,7 @@ public class SignUserService {
     // Next version will remove it.
     List<User> users = new ArrayList<>();
     List<Officer> officers = new ArrayList<>();
-    List<Donor> donors = new ArrayList<>();
+    ListaObj<Donor> donors = new ListaObj<>(10);
 
     public List<User> getAllUsers() {
         return (users.size() != 0) ? users : null ;
