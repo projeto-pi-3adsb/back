@@ -13,7 +13,7 @@ import javax.validation.constraints.NotBlank;
 @MappedSuperclass
 public abstract class User {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private UUID uuid;
+    private String uuid;
 
     @NotBlank
     private String name;
@@ -28,7 +28,7 @@ public abstract class User {
     private String password;
     private boolean logged;
 
-    public User(UUID uuid, String name, String cpfCnpj, String email, String password, boolean logged) {
+    public User(String uuid, String name, String cpfCnpj, String email, String password, boolean logged) {
         this.uuid = uuid;
         this.name = name;
         this.cpfCnpj = cpfCnpj;
@@ -37,7 +37,7 @@ public abstract class User {
         this.logged = logged;
     }
 
-    public UUID getUuid() {
+    public String getUuid() {
         return uuid;
     }
 
