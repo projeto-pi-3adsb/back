@@ -2,11 +2,8 @@ package com.example.start.hemomanager.service;
 
 import com.example.start.hemomanager.shared.user.User;
 import com.example.start.hemomanager.shared.user.donor.Donor;
-import com.example.start.hemomanager.shared.user.hemocenter.officer.Manager;
-import com.example.start.hemomanager.shared.user.hemocenter.officer.Nurse;
 import com.example.start.hemomanager.shared.user.hemocenter.officer.Officer;
-import com.example.start.hemomanager.shared.user.hemocenter.officer.Receptionist;
-import org.springframework.web.bind.annotation.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,19 +36,19 @@ public class SignUserService {
         return donor;
     }
 
-    public Manager insertManager(Manager manager) {
+    public Officer insertManager(Officer manager) {
         officers.add(manager);
         users.add(manager);
         return manager;
     }
 
-    public Nurse insertNurse(Nurse nurse) {
+    public Officer insertNurse(Officer nurse) {
         officers.add(nurse);
         users.add(nurse);
         return nurse;
     }
 
-    public Receptionist insertReceptionist(Receptionist receptionist) {
+    public Officer insertReceptionist(Officer receptionist) {
         officers.add(receptionist);
         users.add(receptionist);
         return receptionist;
