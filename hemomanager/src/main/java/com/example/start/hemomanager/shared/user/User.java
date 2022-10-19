@@ -3,32 +3,29 @@ package com.example.start.hemomanager.shared.user;
 import org.hibernate.validator.constraints.br.CNPJ;
 import org.hibernate.validator.constraints.br.CPF;
 import java.util.UUID;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 @MappedSuperclass
 public abstract class User {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String uuid;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "uuid")
+    private Long uuid;
 
-    @NotBlank
+    @NotBlank @Column(name = "nome")
     private String name;
 
-    @NotBlank @CPF @CNPJ
+    @NotBlank @CPF @CNPJ @Column(name = "cpf_cnpj")
     private String cpfCnpj;
 
-    @NotBlank @Email
+    @NotBlank @Email @Column(name = "email")
     private String email;
 
-    @NotBlank
+    @NotBlank @Column(name = "password")
     private String password;
     private boolean logged;
 
-    public User(String uuid, String name, String cpfCnpj, String email, String password, boolean logged) {
+    public User(Long uuid, String name, String cpfCnpj, String email, String password, boolean logged) {
         this.uuid = uuid;
         this.name = name;
         this.cpfCnpj = cpfCnpj;
@@ -37,7 +34,11 @@ public abstract class User {
         this.logged = logged;
     }
 
-    public String getUuid() {
+    public User() {
+
+    }
+
+    public Long getUuid() {
         return uuid;
     }
 
