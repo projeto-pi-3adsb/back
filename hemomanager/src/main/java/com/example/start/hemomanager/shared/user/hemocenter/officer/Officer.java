@@ -1,15 +1,19 @@
 package com.example.start.hemomanager.shared.user.hemocenter.officer;
 import com.example.start.hemomanager.shared.user.User;
+
+import javax.persistence.Entity;
 import javax.persistence.MappedSuperclass;
 import java.util.UUID;
 
-@MappedSuperclass
-public abstract class Officer extends User {
+@Entity
+public class Officer extends User {
+    private String roleOfficer;
     private boolean admin;
 
-    public Officer(UUID uuid, String name, String cpfCnpj, String email, String password, boolean logged, boolean admin) {
+    public Officer(String uuid, String name, String cpfCnpj, String email, String password, boolean logged, boolean admin, String roleOfficer) {
         super(uuid, name, cpfCnpj, email, password, logged);
         this.admin = admin;
+        this.roleOfficer = roleOfficer;
     }
 
     public boolean authenticateOfficer(String email, String password){
@@ -24,5 +28,15 @@ public abstract class Officer extends User {
 
     public void setAdmin(boolean admin) {
         this.admin = admin;
+    }
+
+    @Override
+    public boolean doLogin() {
+        return false;
+    }
+
+    @Override
+    public boolean doLogout() {
+        return false;
     }
 }
