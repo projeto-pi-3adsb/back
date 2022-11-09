@@ -25,7 +25,10 @@ public class Donor extends User {
     @NotBlank
     private String homeNumber;
 
-    public Donor (String uuid, String name, String cpfCnpj, String email, String password, boolean logged, LocalDate birthDate,
+    public Donor() {
+    }
+
+    public Donor (Long uuid, String name, String cpfCnpj, String email, String password, boolean logged, LocalDate birthDate,
                   String sex, BloodType bloodType, String phone, boolean validDonor, String zipCode, String homeNumber) {
         super(uuid, name, cpfCnpj, email, password, logged);
         this.birthDate = birthDate;

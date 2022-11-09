@@ -8,4 +8,6 @@ import java.util.UUID;
 
 public interface OfficerRepository extends JpaRepository<Officer, UUID> {
     List<Officer> findByEmailAndPassword(String email, String password);
+
+    List<Officer> findAll();
 }

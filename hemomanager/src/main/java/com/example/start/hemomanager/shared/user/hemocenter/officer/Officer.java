@@ -10,7 +10,10 @@ public class Officer extends User {
     private String roleOfficer;
     private boolean admin;
 
-    public Officer(String uuid, String name, String cpfCnpj, String email, String password, boolean logged, boolean admin, String roleOfficer) {
+    public Officer() {
+    }
+
+    public Officer(Long uuid, String name, String cpfCnpj, String email, String password, boolean logged, boolean admin, String roleOfficer) {
         super(uuid, name, cpfCnpj, email, password, logged);
         this.admin = admin;
         this.roleOfficer = roleOfficer;
