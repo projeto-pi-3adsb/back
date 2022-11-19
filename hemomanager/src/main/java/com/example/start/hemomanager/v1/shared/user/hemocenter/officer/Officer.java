@@ -1,8 +1,7 @@
-package com.example.start.hemomanager.shared.user.hemocenter.officer;
-import com.example.start.hemomanager.shared.user.User;
+package com.example.start.hemomanager.v1.shared.user.hemocenter.officer;
+import com.example.start.hemomanager.v1.shared.user.User;
 
 import javax.persistence.Entity;
-import javax.persistence.MappedSuperclass;
 import java.util.UUID;
 
 @Entity
@@ -13,7 +12,7 @@ public class Officer extends User {
     public Officer() {
     }
 
-    public Officer(Long uuid, String name, String cpfCnpj, String email, String password, boolean logged, boolean admin, String roleOfficer) {
+    public Officer(UUID uuid, String name, String cpfCnpj, String email, String password, boolean logged, boolean admin, String roleOfficer) {
         super(uuid, name, cpfCnpj, email, password, logged);
         this.admin = admin;
         this.roleOfficer = roleOfficer;

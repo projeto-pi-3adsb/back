@@ -1,6 +1,6 @@
-package com.example.start.hemomanager.repository;
+package com.example.start.hemomanager.v1.repository;
 
-import com.example.start.hemomanager.shared.user.hemocenter.officer.Officer;
+import com.example.start.hemomanager.v1.shared.user.hemocenter.officer.Officer;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

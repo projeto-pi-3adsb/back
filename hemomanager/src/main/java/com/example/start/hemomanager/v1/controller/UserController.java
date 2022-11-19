@@ -1,22 +1,20 @@
-package com.example.start.hemomanager.controller;
+package com.example.start.hemomanager.v1.controller;
 
-import com.example.start.hemomanager.listaObj.ListaObj;
-import com.example.start.hemomanager.repository.OfficerRepository;
-import com.example.start.hemomanager.repository.DonorRepository;
-import com.example.start.hemomanager.service.LoginUserService;
-import com.example.start.hemomanager.service.SignUserService;
-import com.example.start.hemomanager.shared.enumerators.BloodType;
-import com.example.start.hemomanager.shared.user.User;
-import com.example.start.hemomanager.shared.user.donor.Donor;
-import com.example.start.hemomanager.shared.user.hemocenter.officer.Officer;
+import com.example.start.hemomanager.v1.listaObj.ListaObj;
+import com.example.start.hemomanager.v1.repository.OfficerRepository;
+import com.example.start.hemomanager.v1.repository.DonorRepository;
+import com.example.start.hemomanager.v1.service.LoginUserService;
+import com.example.start.hemomanager.v1.service.SignUserService;
+import com.example.start.hemomanager.v1.shared.enumerators.BloodType;
+import com.example.start.hemomanager.v1.shared.user.User;
+import com.example.start.hemomanager.v1.shared.user.donor.Donor;
+import com.example.start.hemomanager.v1.shared.user.hemocenter.officer.Officer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.*;
@@ -28,18 +26,18 @@ public class UserController {
     @Autowired private DonorRepository donorRepository;
     @Autowired private OfficerRepository officerRepository;
 
-    List<Donor> userList = donorRepository.findAll();
-    List<Officer> officerList = officerRepository.findAll();
+//    List<Donor> userList = donorRepository.findAll();
+//    List<Officer> officerList = officerRepository.findAll();
 
     SignUserService signUserService = new SignUserService();
     LoginUserService loginUserService = new LoginUserService();
     // the class LoginUserService will be used after the implementation of DAOs.
 
     // General registered users management
-    @GetMapping("/listUsers")
-    public ResponseEntity<List<Donor>> getAllUsers() {
-        return userList.isEmpty() ? ResponseEntity.status(204).build() : ResponseEntity.status(200).body(userList);
-    }
+//    @GetMapping("/listUsers")
+//    public ResponseEntity<List<Donor>> getAllUsers() {
+//        return userList.isEmpty() ? ResponseEntity.status(204).build() : ResponseEntity.status(200).body(userList);
+//    }
 
     @DeleteMapping("/logout/{email}")
     public String logoutUser(@PathVariable String email) {
@@ -78,10 +76,10 @@ public class UserController {
         return this.signUserService.loginOfficer(email, password);
     }
 
-    @GetMapping("/listOfficers")
-    public ResponseEntity<List<Officer>> getAllOfficers() {
-        return officerList.isEmpty() ? ResponseEntity.status(204).build() : ResponseEntity.status(200).body(officerList);
-    }
+//    @GetMapping("/listOfficers")
+//    public ResponseEntity<List<Officer>> getAllOfficers() {
+//        return officerList.isEmpty() ? ResponseEntity.status(204).build() : ResponseEntity.status(200).body(officerList);
+//    }
 
     @GetMapping("/listAdminOfficers")
     public Officer getAllAuthorizedStockOfficers() {

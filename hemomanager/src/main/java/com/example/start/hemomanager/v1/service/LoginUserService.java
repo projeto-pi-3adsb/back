@@ -2,9 +2,7 @@
 // this class will be used after the implementation of UserDAO,
 // just to check up the registered users in database.
 
-package com.example.start.hemomanager.service;
-
-import com.example.start.hemomanager.shared.user.User;
+package com.example.start.hemomanager.v1.service;
 
 public class LoginUserService {
 //

@@ -1,4 +1,4 @@
-package com.example.start.hemomanager.shared.user;
+package com.example.start.hemomanager.v1.shared.user;
 
 import org.hibernate.validator.constraints.br.CNPJ;
 import org.hibernate.validator.constraints.br.CPF;
@@ -10,7 +10,7 @@ import javax.validation.constraints.NotBlank;
 @MappedSuperclass
 public abstract class User {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "uuid")
-    private Long uuid;
+    private UUID uuid;
 
     @NotBlank @Column(name = "nome")
     private String name;
@@ -25,7 +25,7 @@ public abstract class User {
     private String password;
     private boolean logged;
 
-    public User(Long uuid, String name, String cpfCnpj, String email, String password, boolean logged) {
+    public User(UUID uuid, String name, String cpfCnpj, String email, String password, boolean logged) {
         this.uuid = uuid;
         this.name = name;
         this.cpfCnpj = cpfCnpj;
@@ -38,7 +38,7 @@ public abstract class User {
 
     }
 
-    public Long getUuid() {
+    public UUID getUuid() {
         return uuid;
     }
 

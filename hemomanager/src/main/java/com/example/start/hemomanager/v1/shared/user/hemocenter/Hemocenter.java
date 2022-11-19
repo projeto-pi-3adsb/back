@@ -1,5 +1,5 @@
-package com.example.start.hemomanager.shared.user.hemocenter;
-import com.example.start.hemomanager.shared.user.hemocenter.officer.Officer;
+package com.example.start.hemomanager.v1.shared.user.hemocenter;
+import com.example.start.hemomanager.v1.shared.user.hemocenter.officer.Officer;
 
 import java.time.LocalTime;
 import java.util.List;

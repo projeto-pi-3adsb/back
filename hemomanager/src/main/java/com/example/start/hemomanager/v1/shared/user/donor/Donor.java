@@ -1,34 +1,31 @@
-package com.example.start.hemomanager.shared.user.donor;
-import com.example.start.hemomanager.shared.enumerators.BloodType;
-import com.example.start.hemomanager.shared.user.User;
+package com.example.start.hemomanager.v1.shared.user.donor;
+import com.example.start.hemomanager.v1.shared.enumerators.BloodType;
+import com.example.start.hemomanager.v1.shared.user.User;
 
 import javax.persistence.Entity;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
 @Entity
 public class Donor extends User {
-    @NotBlank
-    private LocalDate birthDate;
+    private Date birthDate;
     @NotBlank
     private String sex;
-    @NotBlank
+    @NotNull
     private BloodType bloodType;
     @NotBlank
     private String phone;
-    @NotBlank
+    @NotNull
     private boolean validDonor;
     @NotBlank
     private String zipCode;
     @NotBlank
     private String homeNumber;
 
-    public Donor() {
-    }
-
-    public Donor (Long uuid, String name, String cpfCnpj, String email, String password, boolean logged, LocalDate birthDate,
+    public Donor (UUID uuid, String name, String cpfCnpj, String email, String password, boolean logged, Date birthDate,
                   String sex, BloodType bloodType, String phone, boolean validDonor, String zipCode, String homeNumber) {
         super(uuid, name, cpfCnpj, email, password, logged);
         this.birthDate = birthDate;

@@ -1,4 +1,4 @@
-package com.example.start.hemomanager.shared.enumerators;
+package com.example.start.hemomanager.v1.shared.enumerators;
 
 public enum BloodType {
     APOS("A+"),

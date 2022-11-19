@@ -1,5 +1,5 @@
-package com.example.start.hemomanager.shared.stock;
-import com.example.start.hemomanager.shared.enumerators.BloodType;
+package com.example.start.hemomanager.v1.shared.stock;
+import com.example.start.hemomanager.v1.shared.enumerators.BloodType;
 
 public interface Stock {
     public void insertBag();
