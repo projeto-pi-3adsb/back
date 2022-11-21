@@ -1,10 +1,11 @@
 package com.example.start.hemomanager.v1.shared.user.hemocenter.officer;
 import com.example.start.hemomanager.v1.shared.user.User;
+import org.hibernate.id.GUIDGenerator;
 
 import javax.persistence.Entity;
 import java.util.UUID;
 
-@Entity
+//@Entity
 public class Officer extends User {
     private String roleOfficer;
     private boolean admin;
@@ -12,7 +13,7 @@ public class Officer extends User {
     public Officer() {
     }
 
-    public Officer(UUID uuid, String name, String cpfCnpj, String email, String password, boolean logged, boolean admin, String roleOfficer) {
+    public Officer(Integer uuid, String name, String cpfCnpj, String email, String password, boolean logged, boolean admin, String roleOfficer) {
         super(uuid, name, cpfCnpj, email, password, logged);
         this.admin = admin;
         this.roleOfficer = roleOfficer;

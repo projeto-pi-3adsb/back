@@ -1,6 +1,7 @@
 package com.example.start.hemomanager.v1.shared.user.donor;
 import com.example.start.hemomanager.v1.shared.enumerators.BloodType;
 import com.example.start.hemomanager.v1.shared.user.User;
+import org.hibernate.id.GUIDGenerator;
 
 import javax.persistence.Entity;
 import javax.validation.constraints.NotBlank;
@@ -9,7 +10,7 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
-@Entity
+//@Entity
 public class Donor extends User {
     private Date birthDate;
     @NotBlank
@@ -25,7 +26,7 @@ public class Donor extends User {
     @NotBlank
     private String homeNumber;
 
-    public Donor (UUID uuid, String name, String cpfCnpj, String email, String password, boolean logged, Date birthDate,
+    public Donor (Integer uuid, String name, String cpfCnpj, String email, String password, boolean logged, Date birthDate,
                   String sex, BloodType bloodType, String phone, boolean validDonor, String zipCode, String homeNumber) {
         super(uuid, name, cpfCnpj, email, password, logged);
         this.birthDate = birthDate;
