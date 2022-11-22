@@ -94,4 +94,10 @@ public abstract class User {
     public void setLogged(boolean logged) {
         this.logged = logged;
     }
+
+    public boolean authenticate(String email, String password){
+        boolean auth = email.equals(this.email) && password.equals(this.password);
+        setLogged(auth);
+        return auth;
+    }
 }

@@ -1,12 +1,11 @@
 package com.example.start.hemomanager.v2.domain;
 
-import com.example.start.hemomanager.v1.shared.enumerators.BloodType;
+import com.example.start.hemomanager.v2.utils.enumerators.BloodType;
 
 import javax.persistence.Entity;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Entity
 public class Donor extends User {
