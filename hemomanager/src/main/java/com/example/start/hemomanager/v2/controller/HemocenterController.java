@@ -1,21 +1,44 @@
 package com.example.start.hemomanager.v2.controller;
 
 import com.example.start.hemomanager.v2.domain.Hemocenter;
-import com.example.start.hemomanager.v2.domain.Officer;
+import com.example.start.hemomanager.v2.dto.HemocenterSignInDTO;
+import com.example.start.hemomanager.v2.dto.LoginDTO;
 import com.example.start.hemomanager.v2.repository.HemocenterRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
+import java.util.Base64;
 
 @RestController @RequestMapping("/hemocenters")
 public class HemocenterController {
-    @Autowired private final HemocenterRepository hemocenterRepository;
+    @Autowired private HemocenterRepository hemocenterRepository;
 
-    public HemocenterController(HemocenterRepository hemocenterRepository) {
-        this.hemocenterRepository = hemocenterRepository;
+    @PostMapping
+    public ResponseEntity signIn(@RequestBody HemocenterSignInDTO hemocenterDTO) {
+        if (hemocenterRepository.existsByEmailAndCnpj(
+                        hemocenterDTO.getEmail(),
+                        hemocenterDTO.getCnpj())
+        ) return ResponseEntity.status(422).body("E-mail ou CNPJ já cadastrados.");
+
+        Hemocenter hemocenter = new Hemocenter();
+        BeanUtils.copyProperties(hemocenterDTO, hemocenter);
+
+        Hemocenter saved = hemocenterRepository.save(hemocenter);
+        return ResponseEntity.status(200).body(saved);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity login(@RequestBody LoginDTO hemocenterDTO) {
+        Hemocenter hemocenter = hemocenterRepository.findByEmailAndPassword(
+                hemocenterDTO.getEmail(),
+                hemocenterDTO.getPassword());
+        if (hemocenter == null) return ResponseEntity.status(404).build();
+
+        return ResponseEntity.status(200).build();
     }
 
     @PostMapping("/") @ResponseStatus(HttpStatus.CREATED)
@@ -24,23 +47,8 @@ public class HemocenterController {
     }
 
     @GetMapping("/")
-    public List<Hemocenter> getAllHemocenters() {
+    public Iterable<Hemocenter> getAllHemocenters() {
         return hemocenterRepository.findAll();
     }
 
-    public void cadastrarOfficer(Officer admin, Officer officer) {
-        // return (admin.isAdmin()) ? officersList.add(officer) : "Usuário ${admin.getName()} não pode inserir ou alterar outros usuários.";
-
-        System.out.println("funcionário cadastrado");
-    };
-
-    public void removerOfficer(Officer admin, Officer officer) {
-        // return (admin.isAdmin()) ? officersList.remove(officer) : "Usuário ${admin.getName()} não pode alterar outros usuários.";
-        System.out.println("funcionário deletado");
-    };
-
-    public void promoverOfficer(Officer admin, Officer officer) {
-        // return (admin.isAdmin()) ? officer.setAdmin(true) : "Usuário ${admin.getName()} não pode alterar outros usuários.";
-        System.out.println("funcionário promovido");
-    };
 }

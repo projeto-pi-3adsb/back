@@ -1,47 +1,38 @@
 package com.example.start.hemomanager.v2.domain;
 
+import org.hibernate.validator.constraints.br.CNPJ;
+
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalTime;
+import java.util.List;
 
 @Entity
-public class Hemocenter {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "uuid")
+public class Hemocenter extends User {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer uuid;
 
-    @NotBlank @Column(name = "nome")
-    private String name;
+    @NotBlank @CNPJ(message = "cnpj inválido")
+    private String cnpj;
 
-    @NotBlank @Column(name = "cep")
-    private String zipCode;
+    @NotBlank private String zipCode;
 
-    @NotBlank @Column(name = "numeroHemocentro")
-    private String zipNumber;
+    @NotBlank private String zipNumber;
 
-    @NotNull @Column(name = "inicioDaOperacao")
-    private LocalTime startOperation;
+    @NotNull private LocalTime startOperation;
 
-    @NotNull @Column(name = "fimDaOperacao")
-    private LocalTime endOperation;
+    @NotNull private LocalTime endOperation;
 
-    @NotNull @Column(name = "quantidadeAtendimentosSimultaneos")
-    private int qttySimultServices;
+    @NotNull private int qttySimultServices;
 
     public Hemocenter() {
     }
 
-    public Hemocenter(
-            Integer uuid,
-            String name,
-            String zipCode,
-            String zipNumber,
-            LocalTime startOperation,
-            LocalTime endOperation,
-            int qttySimultServices
-    ) {
-        this.uuid = uuid;
-        this.name = name;
+    public Hemocenter(String name, String email, String password, String cnpj, String zipCode, String zipNumber, LocalTime startOperation, LocalTime endOperation, int qttySimultServices) {
+        super(name, email, password);
+        this.cnpj = cnpj;
         this.zipCode = zipCode;
         this.zipNumber = zipNumber;
         this.startOperation = startOperation;
@@ -57,12 +48,12 @@ public class Hemocenter {
         this.uuid = uuid;
     }
 
-    public String getName() {
-        return name;
+    public String getCnpj() {
+        return cnpj;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
     }
 
     public String getZipCode() {

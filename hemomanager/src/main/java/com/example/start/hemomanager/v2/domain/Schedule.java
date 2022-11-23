@@ -13,7 +13,9 @@ public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer uuid;
+    @OneToOne
     private Donor scheduledDonor;
+    @OneToOne
     private Hemocenter scheduledHemocenter;
     private LocalDate scheduledDate;
     private LocalTime scheduledTime;

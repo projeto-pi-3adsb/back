@@ -10,35 +10,21 @@ import java.util.UUID;
 
 @MappedSuperclass
 public abstract class User {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "uuid",  columnDefinition="uniqueidentifier") @GenericGenerator(name = "generator", strategy = "guid", parameters = {})
-    private Integer uuid;
-
-    @NotBlank @Column(name = "nome")
+    @NotBlank
     private String name;
 
-    @NotBlank @CPF(message = "cpf inválido")
-//    @CNPJ(message = "cnpj inválido")
-    @Column(name = "cpf_cnpj")
-    private String cpfCnpj;
-
-    @NotBlank @Email(message = "email inválido") @Column(name = "email")
+    @NotBlank @Email(message = "email inválido")
     private String email;
 
-    @NotBlank @Column(name = "password")
+    @NotBlank
     private String password;
 
-    private boolean logged = false;
-
     public User(
-            Integer uuid,
             String name,
-            String cpfCnpj,
             String email,
             String password
     ) {
-        this.uuid = uuid;
         this.name = name;
-        this.cpfCnpj = cpfCnpj;
         this.email = email;
         this.password = password;
     }
@@ -47,28 +33,12 @@ public abstract class User {
 
     }
 
-    public Integer getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(Integer uuid) {
-        this.uuid = uuid;
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getCpfCnpj() {
-        return cpfCnpj;
-    }
-
-    public void setCpfCnpj(String cpfCnpj) {
-        this.cpfCnpj = cpfCnpj;
     }
 
     public String getEmail() {
@@ -85,19 +55,5 @@ public abstract class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public boolean isLogged() {
-        return logged;
-    }
-
-    public void setLogged(boolean logged) {
-        this.logged = logged;
-    }
-
-    public boolean authenticate(String email, String password){
-        boolean auth = email.equals(this.email) && password.equals(this.password);
-        setLogged(auth);
-        return auth;
     }
 }

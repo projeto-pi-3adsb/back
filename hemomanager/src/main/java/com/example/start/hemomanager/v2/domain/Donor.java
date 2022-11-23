@@ -1,48 +1,59 @@
 package com.example.start.hemomanager.v2.domain;
 
-import com.example.start.hemomanager.v2.utils.enumerators.BloodType;
+import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
 public class Donor extends User {
-    @NotNull
-    private LocalDate birthDate;
-    @NotBlank
-    private String sex;
-    @NotNull
-    private BloodType bloodType;
-    @NotBlank
-    private String phone;
-    @NotNull
-    private boolean validDonor;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @NotBlank @CPF(message = "cpf inválido")
+    private String cpf;
+
+    @NotNull private LocalDate birthDate;
+
+    @NotBlank private String sex;
+
+    @NotBlank private String phone;
+
+    @NotNull private boolean validDonor;
 
     public Donor() {
         super();
     }
 
-    public Donor (
-            Integer uuid,
-            String name,
-            String cpfCnpj,
-            String email,
-            String password,
-            boolean logged,
-            LocalDate birthDate,
-            String sex,
-            BloodType bloodType,
-            String phone,
-            boolean validDonor
+    public Donor(
+        String name,
+        String email,
+        String password,
+        String cpf,
+        LocalDate birthDate,
+        String sex,
+        String phone,
+        boolean validDonor
     ) {
-        super(uuid, name, cpfCnpj, email, password);
+        super(name, email, password);
+        this.cpf = cpf;
         this.birthDate = birthDate;
         this.sex = sex;
-        this.bloodType = bloodType;
         this.phone = phone;
         this.validDonor = validDonor;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public LocalDate getBirthDate() {
@@ -61,14 +72,6 @@ public class Donor extends User {
         this.sex = sex;
     }
 
-    public BloodType getBloodType() {
-        return bloodType;
-    }
-
-    public void setBloodType(BloodType bloodType) {
-        this.bloodType = bloodType;
-    }
-
     public String getPhone() {
         return phone;
     }
@@ -83,5 +86,13 @@ public class Donor extends User {
 
     public void setValidDonor(boolean validDonor) {
         this.validDonor = validDonor;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 }
