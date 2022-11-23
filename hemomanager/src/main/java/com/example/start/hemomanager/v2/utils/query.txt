@@ -1,0 +1,58 @@
+-- apenas em caso de criação das tabelas na azure, manualmente
+-- eventualmente essa query será atualizada
+
+drop table if exists available_time;
+drop table if exists donor;
+drop table if exists hemocenter;
+drop table if exists schedule;
+
+create table available_time (
+    uuid int primary key identity(1,1),
+    time time,
+    hemocenter_uuid int
+);
+
+create table donor (
+    id int primary key identity(1,1),
+    email varchar(255),
+    name varchar(255),
+    password varchar(255),
+    birth_date date not null,
+    cpf varchar(255),
+    phone varchar(255),
+    sex varchar(255),
+    valid_donor bit not null
+);
+
+create table hemocenter (
+    uuid int primary key identity(1,1),
+    email varchar(255),
+    name varchar(255),
+    password varchar(255),
+    cnpj varchar(255),
+    end_operation time not null,
+    qtty_simult_services int not null,
+    start_operation time not null,
+    zip_code varchar(255),
+    zip_number varchar(255)
+);
+
+create table schedule (
+    uuid int primary key identity(1,1),
+    scheduled_date date,
+    scheduled_time time,
+    scheduled_donor_id int,
+    scheduled_hemocenter_uuid int
+);
+
+alter table available_time
+    add foreign key (hemocenter_uuid)
+    references hemocenter;
+
+alter table schedule
+    add foreign key (scheduled_donor_id)
+    references donor;
+
+alter table schedule
+    add foreign key (scheduled_hemocenter_uuid)
+    references hemocenter;
