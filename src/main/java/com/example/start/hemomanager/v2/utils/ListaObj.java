@@ -1,76 +1,78 @@
 package com.example.start.hemomanager.v2.utils;
 
 public class ListaObj<T> {
-    private T[] array;
-    private int elementNumber;
+    private T[] vetor;
+    private int nroElem;
 
-    public ListaObj(Integer size) {
-        this.array = (T[]) new Object[size];
-        this.elementNumber = elementNumber;
+    public ListaObj(int tamanho) {
+        vetor = (T[]) new Object[tamanho];
+        nroElem = 0;
     }
 
-    public void toAdd(T element) {
-        if (elementNumber >= array.length) {
-            System.out.println("The list is full\n");
+    public void add(T elemento) {
+        if (nroElem >= vetor.length) {
+            throw new IllegalStateException();
         }
         else {
-            array[elementNumber++] = element;
+            vetor[nroElem++] = elemento;
         }
     }
 
-    public void exhibit() {
-        if (elementNumber == 0) {
-            System.out.println("\nA The list is empty.");
-        }
-        else {
-            System.out.println("\nList elements:");
-            for (int i = 0; i < elementNumber; i++) {
-                System.out.println(array[i]);
-            }
-        }
-    }
-
-    public int search(T searchedElement) {
-        for (int i = 0; i < elementNumber; i++) {
-            if (array[i].equals(searchedElement)) {
+    public int busca(T elementoBuscado) {
+        for (int i = 0; i < nroElem; i++) {
+            if (vetor[i].equals(elementoBuscado)) {
                 return i;
             }
         }
         return -1;
     }
 
-    public boolean removeByIndex(int index) {
-        if (index < 0 || index >= elementNumber) {
-            System.out.println("\nInvalid index!");
+    public boolean removePeloIndice (int indice) {
+        if (indice < 0 || indice >= nroElem) {
+            System.out.println("\nÍndice inválido!");
             return false;
         }
-
-        for (int i = index; i < elementNumber-1; i++) {
-            array[i] = array[i+1];
+        for (int i = indice; i < nroElem-1; i++) {
+            vetor[i] = vetor[i+1];
         }
-
-        elementNumber--;
+        nroElem--;
         return true;
     }
 
-    public boolean removeElement(T elementToRemove) {
-        return removeByIndex(search(elementToRemove));
+    public boolean removeElemento(T elementoARemover) {
+        return removePeloIndice(busca(elementoARemover));
     }
 
-    public int getSize() {
-        return elementNumber;
+    public int getTamanho() {
+        return nroElem;
     }
 
-    public T getElement(int index) {
-        if (index < 0 || index >= elementNumber) {
+    public T getElemento(int indice) {
+        if (indice < 0 || indice >= nroElem) {
             return null;
         }
         else {
-            return array[index];
+            return vetor[indice];
         }
     }
 
-    public void clear() {
-        elementNumber = 0;
+    public void limpa() {
+        nroElem = 0;
+    }
+
+    public void exibe() {
+        if (nroElem == 0) {
+            System.out.println("\nA lista está vazia.");
+        }
+        else {
+            System.out.println("\nElementos da lista:");
+            for (int i = 0; i < nroElem; i++) {
+                System.out.println(vetor[i]);
+            }
+        }
+    }
+
+    public T[] getVetor() {
+        return vetor;
     }
 }
