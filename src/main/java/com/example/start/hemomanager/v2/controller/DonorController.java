@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController @RequestMapping("/donors")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class DonorController {
     @Autowired private DonorRepository donorRepository;
     List<Donor> donors = new ArrayList<>();
