@@ -20,6 +20,9 @@ public class Schedule {
     private LocalDate scheduledDate;
     private LocalTime scheduledTime;
 
+    public Schedule() {
+    }
+
     public Schedule(Donor scheduledDonor, Hemocenter scheduledHemocenter, LocalDate scheduledDate, LocalTime scheduledTime) {
         this.scheduledDonor = scheduledDonor;
         this.scheduledHemocenter = scheduledHemocenter;

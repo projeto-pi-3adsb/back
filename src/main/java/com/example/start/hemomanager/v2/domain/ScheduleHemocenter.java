@@ -1,13 +1,15 @@
 package com.example.start.hemomanager.v2.domain;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Entity
-public class AvailableTime {
+public class ScheduleHemocenter {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer uuid;
-    private LocalTime time;
+    private LocalTime scheduledTime;
+    private LocalDate scheduledDate;
     @ManyToOne
     private Hemocenter hemocenter;
 
@@ -19,12 +21,20 @@ public class AvailableTime {
         this.uuid = uuid;
     }
 
-    public LocalTime getTime() {
-        return time;
+    public LocalTime getScheduledTime() {
+        return scheduledTime;
     }
 
-    public void setTime(LocalTime time) {
-        this.time = time;
+    public void setScheduledTime(LocalTime scheduledTime) {
+        this.scheduledTime = scheduledTime;
+    }
+
+    public LocalDate getScheduledDate() {
+        return scheduledDate;
+    }
+
+    public void setScheduledDate(LocalDate scheduledDate) {
+        this.scheduledDate = scheduledDate;
     }
 
     public Hemocenter getHemocenter() {
