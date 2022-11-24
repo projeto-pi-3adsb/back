@@ -55,6 +55,11 @@ public class DonorController {
         return donorRepository.findAll();
     }
 
+//    @GetMapping("/gender")
+//    public int qttyDonorsBySex() {
+//        return donorRepository.countBySex();
+//    }
+
     // Donor management
 //    @PostMapping("/{email}/{password}")
 //    public Donor loginDonor(@PathVariable String email, @PathVariable String password) {
