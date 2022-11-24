@@ -6,9 +6,10 @@ drop table if exists donor;
 drop table if exists hemocenter;
 drop table if exists schedule;
 
-create table available_time (
+create table schedule_hemocenter (
     uuid int primary key identity(1,1),
-    time time,
+    scheduled_date date,
+    scheduled_time time,
     hemocenter_uuid int
 );
 
@@ -45,7 +46,7 @@ create table schedule (
     scheduled_hemocenter_uuid int
 );
 
-alter table available_time
+alter table schedule_hemocenter
     add foreign key (hemocenter_uuid)
     references hemocenter;
 

@@ -14,6 +14,7 @@ import javax.validation.Valid;
 import java.util.Base64;
 
 @RestController @RequestMapping("/hemocenters")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class HemocenterController {
     @Autowired private HemocenterRepository hemocenterRepository;
 
