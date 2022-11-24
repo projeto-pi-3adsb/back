@@ -23,47 +23,47 @@ public class StockController {
     }
 
     @GetMapping
-    public Long getAllBags() {
-        return stockRepository.countAll();
+    public long getAllBags() {
+        return stockRepository.countByBloodType();
     }
 
     @GetMapping("/APos")
-    public Long getTypeAPosBags() {
+    public long getTypeAPosBags() {
         return stockRepository.countByTypeAPos();
     }
 
     @GetMapping("/ANeg")
-    public Long getTypeANegBags() {
+    public long getTypeANegBags() {
         return stockRepository.countByTypeANeg();
     }
 
     @GetMapping("/BPos")
-    public Long getTypeBPosBags() {
+    public long getTypeBPosBags() {
         return stockRepository.countByTypeBPos();
     }
 
     @GetMapping("/BNeg")
-    public Long getTypeBNegBags() {
+    public long getTypeBNegBags() {
         return stockRepository.countByTypeBNeg();
     }
 
     @GetMapping("/ABPos")
-    public Long getTypeABPosBags() {
+    public long getTypeABPosBags() {
         return stockRepository.countByTypeABPos();
     }
 
     @GetMapping("/ABNeg")
-    public Long getTypeABNegBags() {
+    public long getTypeABNegBags() {
         return stockRepository.countByTypeABNeg();
     }
 
     @GetMapping("/OPos")
-    public Long getTypeOPosBags() {
+    public long getTypeOPosBags() {
         return stockRepository.countByTypeOPos();
     }
 
     @GetMapping("/ONeg")
-    public Long getTypeONegBags() {
+    public long getTypeONegBags() {
         return stockRepository.countByTypeONeg();
     }
 }

@@ -7,29 +7,30 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface StockRepository extends JpaRepository<Stock, Integer> {
-    Long countAll();
+    @Query(value = "SELECT COUNT(*) FROM stock WHERE id > 0", nativeQuery = true)
+    long countByBloodType();
 
     @Query(value = "SELECT COUNT(*) FROM stock WHERE blood_type = 'APos'", nativeQuery = true)
-    Long countByTypeAPos();
+    long countByTypeAPos();
 
     @Query(value = "SELECT COUNT(*) FROM stock WHERE blood_type = 'ANeg'", nativeQuery = true)
-    Long countByTypeANeg();
+    long countByTypeANeg();
 
     @Query(value = "SELECT COUNT(*) FROM stock WHERE blood_type = 'ANeg'", nativeQuery = true)
-    Long countByTypeBPos();
+    long countByTypeBPos();
 
     @Query(value = "SELECT COUNT(*) FROM stock WHERE blood_type = 'BNeg'", nativeQuery = true)
-    Long countByTypeBNeg();
+    long countByTypeBNeg();
 
     @Query(value = "SELECT COUNT(*) FROM stock WHERE blood_type = 'ANeg'", nativeQuery = true)
-    Long countByTypeABPos();
+    long countByTypeABPos();
 
     @Query(value = "SELECT COUNT(*) FROM stock WHERE blood_type = 'ABNeg'", nativeQuery = true)
-    Long countByTypeABNeg();
+    long countByTypeABNeg();
 
     @Query(value = "SELECT COUNT(*) FROM stock WHERE blood_type = 'ANeg'", nativeQuery = true)
-    Long countByTypeOPos();
+    long countByTypeOPos();
 
     @Query(value = "SELECT COUNT(*) FROM stock WHERE blood_type = 'ONeg'", nativeQuery = true)
-    Long countByTypeONeg();
+    long countByTypeONeg();
 }
