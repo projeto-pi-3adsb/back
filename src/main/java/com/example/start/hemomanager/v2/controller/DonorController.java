@@ -39,7 +39,7 @@ public class DonorController {
         Donor donor = donorRepository.findByEmailAndPassword(
                 donorDTO.getEmail(),
                 donorDTO.getPassword());
-        if (donor == null) return ResponseEntity.status(404).build();
+        if (donor == null) return ResponseEntity.status(404).body("Email ou senha incorretos.");
 
         return ResponseEntity.status(200).build();
     }
