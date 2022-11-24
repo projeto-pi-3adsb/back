@@ -15,8 +15,7 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController @RequestMapping("/donors")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@RestController @RequestMapping("/donor") @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class DonorController {
     @Autowired private DonorRepository donorRepository;
     List<Donor> donors = new ArrayList<>();
@@ -50,15 +49,20 @@ public class DonorController {
         return donorRepository.save(donor);
     }
 
-    @GetMapping("/")
+    @GetMapping
     public Iterable<Donor> getAllDonors() {
         return donorRepository.findAll();
     }
 
-//    @GetMapping("/gender")
-//    public int qttyDonorsBySex() {
-//        return donorRepository.countBySex();
-//    }
+    @GetMapping("/gender/male")
+    public Long qttyMaleDonors() {
+        return donorRepository.countBySexMale();
+    }
+
+    @GetMapping("/gender/female")
+    public Long qttyFemaleDonors() {
+        return donorRepository.countBySexFemale();
+    }
 
     // Donor management
 //    @PostMapping("/{email}/{password}")
