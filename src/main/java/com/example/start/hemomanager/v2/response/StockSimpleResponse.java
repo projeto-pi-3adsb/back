@@ -1,19 +1,19 @@
 package com.example.start.hemomanager.v2.response;
 
-public class OfficerSimpleResponse {
-    private Integer uuid;
-    private String name;
+public class StockSimpleResponse {
+    private Integer id;
+    private String bloodType;
 
-    public OfficerSimpleResponse(int uuid, String name) {
-        this.uuid = uuid;
-        this.name = name;
+    public StockSimpleResponse(int id, String bloodType) {
+        this.id = id;
+        this.bloodType = bloodType;
     }
 
     public int getUuid() {
-        return uuid;
+        return id;
     }
 
     public String getName() {
-        return name;
+        return bloodType;
     }
 }
