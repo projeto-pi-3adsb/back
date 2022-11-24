@@ -16,15 +16,22 @@ public class Schedule {
     @OneToOne
     private Donor scheduledDonor;
     @OneToOne
-    private Hemocenter scheduledHemocenter;
-    private LocalDate scheduledDate;
-    private LocalTime scheduledTime;
+    private Hemocenter hemocenter;
+    @ManyToOne
+    private ScheduleHemocenter scheduleHemocenter;
 
-    public Schedule(Donor scheduledDonor, Hemocenter scheduledHemocenter, LocalDate scheduledDate, LocalTime scheduledTime) {
+
+    public Schedule(Integer uuid, Donor scheduledDonor, Hemocenter hemocenter, ScheduleHemocenter scheduleHemocenter) {
+        this.uuid = uuid;
         this.scheduledDonor = scheduledDonor;
-        this.scheduledHemocenter = scheduledHemocenter;
-        this.scheduledDate = scheduledDate;
-        this.scheduledTime = scheduledTime;
+        this.hemocenter = hemocenter;
+        this.scheduleHemocenter = scheduleHemocenter;
+    }
+
+    public Schedule(Donor scheduledDonor, Hemocenter hemocenter, ScheduleHemocenter scheduleHemocenter) {
+        this.scheduledDonor = scheduledDonor;
+        this.hemocenter = hemocenter;
+        this.scheduleHemocenter = scheduleHemocenter;
     }
 
     public Integer getUuid() {
@@ -43,27 +50,19 @@ public class Schedule {
         this.scheduledDonor = scheduledDonor;
     }
 
-    public Hemocenter getScheduledHemocenter() {
-        return scheduledHemocenter;
+    public Hemocenter getHemocenter() {
+        return hemocenter;
     }
 
-    public void setScheduledHemocenter(Hemocenter scheduledHemocenter) {
-        this.scheduledHemocenter = scheduledHemocenter;
+    public void setHemocenter(Hemocenter hemocenter) {
+        this.hemocenter = hemocenter;
     }
 
-    public LocalDate getScheduledDate() {
-        return scheduledDate;
+    public ScheduleHemocenter getScheduleHemocenter() {
+        return scheduleHemocenter;
     }
 
-    public void setScheduledDate(LocalDate scheduledDate) {
-        this.scheduledDate = scheduledDate;
-    }
-
-    public LocalTime getScheduledTime() {
-        return scheduledTime;
-    }
-
-    public void setScheduledTime(LocalTime scheduledTime) {
-        this.scheduledTime = scheduledTime;
+    public void setScheduleHemocenter(ScheduleHemocenter scheduleHemocenter) {
+        this.scheduleHemocenter = scheduleHemocenter;
     }
 }
