@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.Base64;
 
-@RestController @RequestMapping("/hemocenters")
+@RestController @RequestMapping("/hemocenter")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class HemocenterController {
     @Autowired private HemocenterRepository hemocenterRepository;
