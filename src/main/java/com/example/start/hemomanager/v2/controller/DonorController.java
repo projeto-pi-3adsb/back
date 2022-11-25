@@ -52,6 +52,16 @@ public class DonorController {
         return ResponseEntity.status(200).build();
     }
 
+    @PostMapping("/current/user")
+    public ResponseEntity loginWithReturn(@RequestBody LoginDTO donorDTO) {
+        Donor donor = donorRepository.findByEmailAndPassword(
+                donorDTO.getEmail(),
+                donorDTO.getPassword());
+        if (donor == null) return ResponseEntity.status(404).body("Email ou senha incorretos.");
+
+        return ResponseEntity.status(200).body(donor);
+    }
+
     @PostMapping("/") @ResponseStatus(HttpStatus.CREATED)
     public Donor insertDonor(@RequestBody @Valid Donor donor) {
         return donorRepository.save(donor);

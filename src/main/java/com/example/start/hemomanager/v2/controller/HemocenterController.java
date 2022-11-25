@@ -46,6 +46,16 @@ public class HemocenterController {
         return ResponseEntity.status(200).build();
     }
 
+    @PostMapping("/current/hemocenter")
+    public ResponseEntity loginWithReturn(@RequestBody LoginDTO hemocenterDTO) {
+        Hemocenter hemocenter = hemocenterRepository.findByEmailAndPassword(
+                hemocenterDTO.getEmail(),
+                hemocenterDTO.getPassword());
+        if (hemocenter == null) return ResponseEntity.status(404).build();
+
+        return ResponseEntity.status(200).body(hemocenter);
+    }
+
     @PostMapping("/") @ResponseStatus(HttpStatus.CREATED)
     public Hemocenter insertHemocenter(@RequestBody @Valid Hemocenter hemocenter) {
         return hemocenterRepository.save(hemocenter);
