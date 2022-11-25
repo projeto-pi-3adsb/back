@@ -31,8 +31,8 @@ public class StockController {
     }
 
     @GetMapping
-    public long getAllBags() {
-        return stockRepository.countByBloodType();
+    public List<Stock> getAllBags() {
+        return stockRepository.findAll();
     }
 
     @GetMapping("/APos")
