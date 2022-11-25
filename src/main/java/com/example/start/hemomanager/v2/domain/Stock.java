@@ -17,6 +17,10 @@ public class Stock {
     public Stock() {
     }
 
+    public Stock(String bloodType) {
+        this.bloodType = bloodType;
+    }
+
     public Stock(String bloodType, LocalDate collectionDate) {
         this.bloodType = bloodType;
         this.collectionDate = collectionDate;

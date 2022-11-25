@@ -1,6 +1,7 @@
 package com.example.start.hemomanager.v2.controller;
 
 import com.example.start.hemomanager.v2.domain.Stock;
+import com.example.start.hemomanager.v2.dto.SimpleStockDTO;
 import com.example.start.hemomanager.v2.dto.StockDTO;
 import com.example.start.hemomanager.v2.repository.StockRepository;
 import org.springframework.beans.BeanUtils;
@@ -35,43 +36,8 @@ public class StockController {
         return stockRepository.findAll();
     }
 
-    @GetMapping("/APos")
-    public long getTypeAPosBags() {
-        return stockRepository.countByTypeAPos();
-    }
-
-    @GetMapping("/ANeg")
-    public long getTypeANegBags() {
-        return stockRepository.countByTypeANeg();
-    }
-
-    @GetMapping("/BPos")
-    public long getTypeBPosBags() {
-        return stockRepository.countByTypeBPos();
-    }
-
-    @GetMapping("/BNeg")
-    public long getTypeBNegBags() {
-        return stockRepository.countByTypeBNeg();
-    }
-
-    @GetMapping("/ABPos")
-    public long getTypeABPosBags() {
-        return stockRepository.countByTypeABPos();
-    }
-
-    @GetMapping("/ABNeg")
-    public long getTypeABNegBags() {
-        return stockRepository.countByTypeABNeg();
-    }
-
-    @GetMapping("/OPos")
-    public long getTypeOPosBags() {
-        return stockRepository.countByTypeOPos();
-    }
-
-    @GetMapping("/ONeg")
-    public long getTypeONegBags() {
-        return stockRepository.countByTypeONeg();
+    @GetMapping("/type")
+    public long getTypeAPosBags(@RequestBody SimpleStockDTO stockDTO) {
+        return stockRepository.countByType(stockDTO.getBloodType());
     }
 }
