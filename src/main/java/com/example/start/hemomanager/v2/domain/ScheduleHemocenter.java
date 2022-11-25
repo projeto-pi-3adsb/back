@@ -6,12 +6,21 @@ import java.time.LocalTime;
 
 @Entity
 public class ScheduleHemocenter {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer uuid;
-    private LocalTime scheduledTime;
-    private LocalDate scheduledDate;
     @ManyToOne
-    private Hemocenter hemocenter;
+    private ScheduleHemocenter hemocenter;
+    private LocalDate scheduledDate;
+    private LocalTime scheduledTime;
+
+    public ScheduleHemocenter(ScheduleHemocenter hemocenter, LocalDate scheduledDate, LocalTime scheduledTime) {
+        this.hemocenter = hemocenter;
+        this.scheduledDate = scheduledDate;
+        this.scheduledTime = scheduledTime;
+    }
+
+    public ScheduleHemocenter(){}
 
     public Integer getUuid() {
         return uuid;
@@ -21,12 +30,12 @@ public class ScheduleHemocenter {
         this.uuid = uuid;
     }
 
-    public LocalTime getScheduledTime() {
-        return scheduledTime;
+    public ScheduleHemocenter gethemocenter() {
+        return hemocenter;
     }
 
-    public void setScheduledTime(LocalTime scheduledTime) {
-        this.scheduledTime = scheduledTime;
+    public void sethemocenter(ScheduleHemocenter hemocenter) {
+        this.hemocenter = hemocenter;
     }
 
     public LocalDate getScheduledDate() {
@@ -37,11 +46,11 @@ public class ScheduleHemocenter {
         this.scheduledDate = scheduledDate;
     }
 
-    public Hemocenter getHemocenter() {
-        return hemocenter;
+    public LocalTime getScheduledTime() {
+        return scheduledTime;
     }
 
-    public void setHemocenter(Hemocenter hemocenter) {
-        this.hemocenter = hemocenter;
+    public void setScheduledTime(LocalTime scheduledTime) {
+        this.scheduledTime = scheduledTime;
     }
 }

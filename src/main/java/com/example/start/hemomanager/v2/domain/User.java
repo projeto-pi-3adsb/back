@@ -14,6 +14,7 @@ public abstract class User {
     private String name;
 
     @NotBlank @Email(message = "email inválido")
+    @Column(unique = true)
     private String email;
 
     @NotBlank

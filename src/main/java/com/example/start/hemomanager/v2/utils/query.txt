@@ -46,6 +46,13 @@ create table schedule (
     scheduled_hemocenter_uuid int
 );
 
+create table stock (
+    id int primary key identity(1,1),
+    blood_type varchar(255),
+    collection_date date,
+    insert_date date
+);
+
 alter table schedule_hemocenter
     add foreign key (hemocenter_uuid)
     references hemocenter;
