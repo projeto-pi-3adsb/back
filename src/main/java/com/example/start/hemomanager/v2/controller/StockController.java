@@ -38,7 +38,7 @@ public class StockController {
     }
 
     @GetMapping("/type/{bloodType}")
-    public long getTypeAPosBags(@RequestParam String bloodType) {
+    public long getTypeAPosBags(@PathVariable String bloodType) {
         return stockRepository.countByType(bloodType);
     }
 }
