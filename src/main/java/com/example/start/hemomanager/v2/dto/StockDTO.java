@@ -13,7 +13,6 @@ public class StockDTO extends Stock {
     }
 
     public boolean validateBloodType(String bloodType) {
-        System.out.println(bloodType);
         switch (bloodType) {
             case "APos":
             case "ANeg":

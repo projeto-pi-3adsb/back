@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController @RequestMapping("/stock")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class StockController {
     @Autowired private StockRepository stockRepository;
     List<Stock> bags = new ArrayList<>();
@@ -36,8 +37,8 @@ public class StockController {
         return stockRepository.findAll();
     }
 
-    @GetMapping("/type")
-    public long getTypeAPosBags(@RequestBody SimpleStockDTO stockDTO) {
-        return stockRepository.countByType(stockDTO.getBloodType());
+    @GetMapping("/type/{bloodType}")
+    public long getTypeAPosBags(@RequestParam String bloodType) {
+        return stockRepository.countByType(bloodType);
     }
 }
