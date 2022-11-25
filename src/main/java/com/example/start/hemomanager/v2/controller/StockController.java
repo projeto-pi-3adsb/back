@@ -18,6 +18,12 @@ public class StockController {
 
     @PostMapping
     public ResponseEntity insertBag(@RequestBody StockDTO stockDTO) {
+        String bloodType = stockDTO.getBloodType();
+
+        if (!stockDTO.validateBloodType(bloodType)) {
+            return ResponseEntity.status(422).body("Erro na inserção da bolsa. Verifique o tipo de sangue da bolsa.");
+        }
+
         Stock stock = new Stock();
         BeanUtils.copyProperties(stockDTO, stock);
         Stock saved = stockRepository.save(stock);
