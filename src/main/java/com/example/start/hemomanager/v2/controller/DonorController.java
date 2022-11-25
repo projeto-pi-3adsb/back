@@ -52,7 +52,7 @@ public class DonorController {
         return ResponseEntity.status(200).build();
     }
 
-    @PostMapping("/current/user")
+    @PostMapping("/current")
     public ResponseEntity loginWithReturn(@RequestBody LoginDTO donorDTO) {
         Donor donor = donorRepository.findByEmailAndPassword(
                 donorDTO.getEmail(),

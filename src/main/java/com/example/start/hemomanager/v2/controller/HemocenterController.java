@@ -46,7 +46,7 @@ public class HemocenterController {
         return ResponseEntity.status(200).build();
     }
 
-    @PostMapping("/current/hemocenter")
+    @PostMapping("/current")
     public ResponseEntity loginWithReturn(@RequestBody LoginDTO hemocenterDTO) {
         Hemocenter hemocenter = hemocenterRepository.findByEmailAndPassword(
                 hemocenterDTO.getEmail(),
