@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.br.CNPJ;
 import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import java.util.UUID;
 
@@ -17,7 +18,7 @@ public abstract class User {
     @Column(unique = true)
     private String email;
 
-    @NotBlank
+    @NotBlank @Min(8)
     private String password;
 
     public User(

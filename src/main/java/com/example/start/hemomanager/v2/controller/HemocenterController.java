@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @RestController @RequestMapping("/hemocenter")
@@ -61,8 +62,8 @@ public class HemocenterController {
         return hemocenterRepository.save(hemocenter);
     }
 
-    @GetMapping("/")
-    public Iterable<Hemocenter> getAllHemocenters() {
+    @GetMapping()
+    public List<Hemocenter> getAllHemocenters() {
         return hemocenterRepository.findAll();
     }
 

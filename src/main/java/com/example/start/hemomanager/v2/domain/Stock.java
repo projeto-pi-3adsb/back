@@ -1,6 +1,8 @@
 package com.example.start.hemomanager.v2.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -8,15 +10,18 @@ import java.util.List;
 public class Stock {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private LocalDate insertDate; // data de inserção no estoque
-    private String bloodType;
-    private LocalDate collectionDate; // data da coleta
+    private LocalDate insertDate = LocalDate.now(); // data de inserção no estoque
+    @NotBlank private String bloodType;
+    @NotNull private LocalDate collectionDate; // data da coleta
 
     public Stock() {
     }
 
-    public Stock(LocalDate insertDate, String bloodType, LocalDate collectionDate) {
-        this.insertDate = insertDate;
+    public Stock(String bloodType) {
+        this.bloodType = bloodType;
+    }
+
+    public Stock(String bloodType, LocalDate collectionDate) {
         this.bloodType = bloodType;
         this.collectionDate = collectionDate;
     }
