@@ -8,15 +8,13 @@ import java.time.LocalDate;
 public class StockDTO {
     private String bloodType;
     private LocalDate collectionDate;
-    private Integer hemocenter;
 
     public StockDTO() {
     }
 
-    public StockDTO(String bloodType, LocalDate collectionDate, Integer hemocenter) {
+    public StockDTO(String bloodType, LocalDate collectionDate) {
         this.bloodType = bloodType;
         this.collectionDate = collectionDate;
-        this.hemocenter = hemocenter;
     }
 
     public boolean validateBloodType(String bloodType) {
@@ -41,9 +39,5 @@ public class StockDTO {
 
     public LocalDate getCollectionDate() {
         return collectionDate;
-    }
-
-    public Integer getHemocenter() {
-        return hemocenter;
     }
 }

@@ -22,11 +22,11 @@ public class StockController {
     @Autowired private HemocenterRepository hemocenterRepository;
     List<Stock> bags = new ArrayList<>();
 
-    @PostMapping
-    public ResponseEntity insertBag(@RequestBody StockDTO stockDTO) {
+    @PostMapping("/{hemocenter}")
+    public ResponseEntity insertBag(@PathVariable Integer hemocenter, @RequestBody StockDTO stockDTO) {
         String bloodType = stockDTO.getBloodType();
 
-        if (!hemocenterRepository.existsById(stockDTO.getHemocenter())) {
+        if (!hemocenterRepository.existsById(hemocenter)) {
             return ResponseEntity.status(404).body("Hemocentro não encontrado.");
         }
         if (!stockDTO.validateBloodType(bloodType)) {
@@ -36,7 +36,7 @@ public class StockController {
         Stock stock = new Stock();
 
         Hemocenter hemocenterToSave = new Hemocenter();
-        hemocenterToSave.setUuid(stockDTO.getHemocenter());
+        hemocenterToSave.setUuid(hemocenter);
 
         stock.setHemocenter(hemocenterToSave);
         stock.setBloodType(bloodType);
