@@ -31,9 +31,6 @@ public class StockController {
         if (!hemocenterRepository.existsById(hemocenter)) {
             return ResponseEntity.status(404).body("Hemocentro não encontrado.");
         }
-        if (!validation.validateBloodType(bloodType)) {
-            return ResponseEntity.status(422).body("Erro na inserção da bolsa. Verifique o tipo de sangue da bolsa.");
-        }
 
         Stock stock = new Stock();
 
