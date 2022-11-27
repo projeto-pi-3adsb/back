@@ -6,6 +6,7 @@ import com.example.start.hemomanager.v2.dto.InputValidation;
 import com.example.start.hemomanager.v2.dto.StockDTO;
 import com.example.start.hemomanager.v2.repository.HemocenterRepository;
 import com.example.start.hemomanager.v2.repository.StockRepository;
+import com.example.start.hemomanager.v2.response.StockFullResponse;
 import com.example.start.hemomanager.v2.response.StockSimpleResponse;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +65,7 @@ public class StockController {
     }
 
     @GetMapping("/full/{hemocenter}")
-    public List<Stock> getAllFromStockHemocenter(@PathVariable Integer hemocenter) {
-        return stockRepository.getFromStockHemocenter(hemocenter);
+    public ResponseEntity<List<StockFullResponse>> getAllFromStockHemocenter(@PathVariable Integer hemocenter) {
+        return (hemocenterRepository.existsById(hemocenter)) ? ResponseEntity.status(200).body(stockRepository.findByHemocenter(hemocenter)) : ResponseEntity.status(404).build();
     }
 }
