@@ -18,7 +18,7 @@ public abstract class User {
     @Column(unique = true)
     private String email;
 
-    @NotBlank @Min(8)
+    @NotBlank
     private String password;
 
     public User(
