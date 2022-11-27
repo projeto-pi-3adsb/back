@@ -68,4 +68,16 @@ public class DonorSignInDTO {
     public boolean isValidDonor() {
         return validDonor;
     }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
 }
