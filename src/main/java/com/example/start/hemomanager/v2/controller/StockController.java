@@ -62,4 +62,9 @@ public class StockController {
     public ResponseEntity<List<StockSimpleResponse>> groupBy(@PathVariable Integer hemocenter) {
         return (hemocenterRepository.existsById(hemocenter)) ? ResponseEntity.status(200).body(stockRepository.groupByBloodType(hemocenter)) : ResponseEntity.status(404).build();
     }
+
+    @GetMapping("/full/{hemocenter}")
+    public List<Stock> getAllFromStockHemocenter(@PathVariable Integer hemocenter) {
+        return stockRepository.getFromStockHemocenter(hemocenter);
+    }
 }
