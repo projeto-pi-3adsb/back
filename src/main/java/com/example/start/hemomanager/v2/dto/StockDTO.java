@@ -19,14 +19,14 @@ public class StockDTO {
 
     public boolean validateBloodType(String bloodType) {
         switch (bloodType) {
-            case "APos":
-            case "ANeg":
-            case "BPos":
-            case "BNeg":
-            case "ABPos":
-            case "ABNeg":
-            case "OPos":
-            case "ONeg":
+            case "A+":
+            case "A-":
+            case "B+":
+            case "B-":
+            case "AB+":
+            case "AB-":
+            case "O+":
+            case "O-":
                 return true;
             default:
                 return false;
