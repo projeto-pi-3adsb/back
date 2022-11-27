@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
 
-@Entity
+@Entity(name = "stock")
 public class Stock {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

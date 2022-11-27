@@ -4,6 +4,7 @@ import com.example.start.hemomanager.v2.domain.Stock;
 import com.example.start.hemomanager.v2.dto.SimpleStockDTO;
 import com.example.start.hemomanager.v2.dto.StockDTO;
 import com.example.start.hemomanager.v2.repository.StockRepository;
+import com.example.start.hemomanager.v2.response.StockSimpleResponse;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -43,7 +44,7 @@ public class StockController {
     }
 
     @GetMapping("/bloodType")
-    public long groupBy() {
+    public List<StockSimpleResponse> groupBy() {
         return stockRepository.groupByBloodType();
     }
 }
