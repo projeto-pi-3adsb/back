@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import java.time.LocalDate;
 
 @Entity
@@ -18,7 +19,7 @@ public class Donor extends User {
     @NotBlank @CPF(message = "cpf inválido")
     private String cpf;
 
-    @NotNull private LocalDate birthDate;
+    @NotNull @Past private LocalDate birthDate;
 
     @NotBlank private String sex;
 

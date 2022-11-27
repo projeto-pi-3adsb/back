@@ -3,6 +3,7 @@ package com.example.start.hemomanager.v2.controller;
 import com.example.start.hemomanager.v2.domain.*;
 import com.example.start.hemomanager.v2.domain.Donor;
 import com.example.start.hemomanager.v2.dto.DonorSignInDTO;
+import com.example.start.hemomanager.v2.dto.InputValidation;
 import com.example.start.hemomanager.v2.dto.LoginDTO;
 import com.example.start.hemomanager.v2.repository.DonorRepository;
 import com.example.start.hemomanager.v2.repository.HemocenterRepository;
@@ -26,6 +27,7 @@ public class DonorController {
     @Autowired private ScheduleHemocenterRepository scheduleHemocenterRepository;
     @Autowired private ScheduleRepository scheduleRepository;
     @Autowired private HemocenterRepository hemocenterRepository;
+    private InputValidation validation;
     List<Donor> donors = new ArrayList<>();
 
     @PostMapping
@@ -39,17 +41,7 @@ public class DonorController {
         BeanUtils.copyProperties(donorDTO, donor);
 
         Donor saved = donorRepository.save(donor);
-        return ResponseEntity.status(200).body(saved);
-    }
-
-    @PostMapping("/login")
-    public ResponseEntity login(@RequestBody LoginDTO donorDTO) {
-        Donor donor = donorRepository.findByEmailAndPassword(
-                donorDTO.getEmail(),
-                donorDTO.getPassword());
-        if (donor == null) return ResponseEntity.status(404).body("Email ou senha incorretos.");
-
-        return ResponseEntity.status(200).build();
+        return ResponseEntity.status(201).body(saved);
     }
 
     @PostMapping("/current")
@@ -81,17 +73,6 @@ public class DonorController {
     public Long qttyFemaleDonors() {
         return donorRepository.countBySexFemale();
     }
-
-    // Donor management
-//    @PostMapping("/{email}/{password}")
-//    public Donor loginDonor(@PathVariable String email, @PathVariable String password) {
-//        for (Donor currentDonor : donors) {
-//            if (currentDonor.authenticateDonor(email, password)) {
-//                return currentDonor;
-//            }
-//        }
-//        return null;
-//    }
 
     @PostMapping("/schedule")
     public Schedule insertSchedule(@RequestBody @Valid ScheduleRequest scheduleRequest){

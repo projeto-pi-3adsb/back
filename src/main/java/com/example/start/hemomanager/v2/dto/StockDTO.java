@@ -17,22 +17,6 @@ public class StockDTO {
         this.collectionDate = collectionDate;
     }
 
-    public boolean validateBloodType(String bloodType) {
-        switch (bloodType) {
-            case "A+":
-            case "A-":
-            case "B+":
-            case "B-":
-            case "AB+":
-            case "AB-":
-            case "O+":
-            case "O-":
-                return true;
-            default:
-                return false;
-        }
-    }
-
     public String getBloodType() {
         return bloodType;
     }

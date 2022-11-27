@@ -26,40 +26,23 @@ public class HemocenterController {
     @PostMapping
     public ResponseEntity signIn(@RequestBody HemocenterSignInDTO hemocenterDTO) {
         if (hemocenterRepository.existsByEmailAndCnpj(
-                        hemocenterDTO.getEmail(),
-                        hemocenterDTO.getCnpj())
+            hemocenterDTO.getEmail(), hemocenterDTO.getCnpj())
         ) return ResponseEntity.status(422).body("E-mail ou CNPJ já cadastrados.");
 
         Hemocenter hemocenter = new Hemocenter();
         BeanUtils.copyProperties(hemocenterDTO, hemocenter);
 
         Hemocenter saved = hemocenterRepository.save(hemocenter);
-        return ResponseEntity.status(200).body(saved);
-    }
-
-    @PostMapping("/login")
-    public ResponseEntity login(@RequestBody LoginDTO hemocenterDTO) {
-        Hemocenter hemocenter = hemocenterRepository.findByEmailAndPassword(
-                hemocenterDTO.getEmail(),
-                hemocenterDTO.getPassword());
-        if (hemocenter == null) return ResponseEntity.status(404).build();
-
-        return ResponseEntity.status(200).build();
+        return ResponseEntity.status(201).body(saved);
     }
 
     @PostMapping("/current")
     public ResponseEntity loginWithReturn(@RequestBody LoginDTO hemocenterDTO) {
         Hemocenter hemocenter = hemocenterRepository.findByEmailAndPassword(
-                hemocenterDTO.getEmail(),
-                hemocenterDTO.getPassword());
+            hemocenterDTO.getEmail(), hemocenterDTO.getPassword());
         if (hemocenter == null) return ResponseEntity.status(404).build();
 
         return ResponseEntity.status(200).body(hemocenter);
-    }
-
-    @PostMapping("/") @ResponseStatus(HttpStatus.CREATED)
-    public Hemocenter insertHemocenter(@RequestBody @Valid Hemocenter hemocenter) {
-        return hemocenterRepository.save(hemocenter);
     }
 
     @GetMapping()

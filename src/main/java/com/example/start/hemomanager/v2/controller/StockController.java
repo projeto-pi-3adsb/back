@@ -2,7 +2,7 @@ package com.example.start.hemomanager.v2.controller;
 
 import com.example.start.hemomanager.v2.domain.Hemocenter;
 import com.example.start.hemomanager.v2.domain.Stock;
-import com.example.start.hemomanager.v2.dto.SimpleStockDTO;
+import com.example.start.hemomanager.v2.dto.InputValidation;
 import com.example.start.hemomanager.v2.dto.StockDTO;
 import com.example.start.hemomanager.v2.repository.HemocenterRepository;
 import com.example.start.hemomanager.v2.repository.StockRepository;
@@ -20,6 +20,7 @@ import java.util.List;
 public class StockController {
     @Autowired private StockRepository stockRepository;
     @Autowired private HemocenterRepository hemocenterRepository;
+    private InputValidation validation;
     List<Stock> bags = new ArrayList<>();
 
     @PostMapping("/{hemocenter}")
@@ -29,7 +30,7 @@ public class StockController {
         if (!hemocenterRepository.existsById(hemocenter)) {
             return ResponseEntity.status(404).body("Hemocentro não encontrado.");
         }
-        if (!stockDTO.validateBloodType(bloodType)) {
+        if (!validation.validateBloodType(bloodType)) {
             return ResponseEntity.status(422).body("Erro na inserção da bolsa. Verifique o tipo de sangue da bolsa.");
         }
 
@@ -58,7 +59,7 @@ public class StockController {
     }
 
     @GetMapping("/bloodType/{hemocenter}")
-    public List<StockSimpleResponse> groupBy(@PathVariable Integer hemocenter) {
-        return stockRepository.groupByBloodType(hemocenter);
+    public ResponseEntity<List<StockSimpleResponse>> groupBy(@PathVariable Integer hemocenter) {
+        return (hemocenterRepository.existsById(hemocenter)) ? ResponseEntity.status(200).body(stockRepository.groupByBloodType(hemocenter)) : ResponseEntity.status(404).build();
     }
 }
