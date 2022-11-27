@@ -17,6 +17,6 @@ public interface StockRepository extends JpaRepository<Stock, Integer> {
     @Query(value = "SELECT COUNT(*) FROM stock WHERE blood_type = :blood_type", nativeQuery = true)
     long countByType(@Param("blood_type") String blood_type);
 
-    @Query("SELECT new com.example.start.hemomanager.v2.response.StockSimpleResponse(COUNT(*), s.bloodType) FROM stock s GROUP BY s.bloodType")
-    List<StockSimpleResponse> groupByBloodType();
+    @Query("SELECT new com.example.start.hemomanager.v2.response.StockSimpleResponse(COUNT(*), s.bloodType) FROM stock s JOIN s.hemocenter WHERE s.hemocenter.uuid =:uuid GROUP BY s.bloodType")
+    List<StockSimpleResponse> groupByBloodType(@Param("uuid") Integer uuid);
 }

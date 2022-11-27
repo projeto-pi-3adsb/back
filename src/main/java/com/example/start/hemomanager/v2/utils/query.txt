@@ -50,7 +50,8 @@ create table stock (
     id int primary key identity(1,1),
     blood_type varchar(255),
     collection_date date,
-    insert_date date
+    insert_date date,
+    hemocenter_uuid int
 );
 
 alter table schedule_hemocenter

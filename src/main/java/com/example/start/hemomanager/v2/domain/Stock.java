@@ -13,6 +13,7 @@ public class Stock {
     private LocalDate insertDate = LocalDate.now(); // data de inserção no estoque
     @NotBlank private String bloodType;
     @NotNull private LocalDate collectionDate; // data da coleta
+    @OneToOne(fetch = FetchType.LAZY) private Hemocenter hemocenter;
 
     public Stock() {
     }
@@ -24,6 +25,12 @@ public class Stock {
     public Stock(String bloodType, LocalDate collectionDate) {
         this.bloodType = bloodType;
         this.collectionDate = collectionDate;
+    }
+
+    public Stock(String bloodType, LocalDate collectionDate, Hemocenter hemocenter) {
+        this.bloodType = bloodType;
+        this.collectionDate = collectionDate;
+        this.hemocenter = hemocenter;
     }
 
     public Integer getId() {
@@ -56,5 +63,13 @@ public class Stock {
 
     public void setCollectionDate(LocalDate collectionDate) {
         this.collectionDate = collectionDate;
+    }
+
+    public Hemocenter getHemocenter() {
+        return hemocenter;
+    }
+
+    public void setHemocenter(Hemocenter hemocenter) {
+        this.hemocenter = hemocenter;
     }
 }
