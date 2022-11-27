@@ -41,4 +41,9 @@ public class StockController {
     public long getTypeAPosBags(@PathVariable String bloodType) {
         return stockRepository.countByType(bloodType);
     }
+
+    @GetMapping("/bloodType")
+    public long groupBy() {
+        return stockRepository.groupByBloodType();
+    }
 }
