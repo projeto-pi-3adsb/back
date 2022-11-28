@@ -78,4 +78,40 @@ public class HemocenterSignInDTO {
     public int getQttySimultServices() {
         return qttySimultServices;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    public void setZipNumber(String zipNumber) {
+        this.zipNumber = zipNumber;
+    }
+
+    public void setStartOperation(LocalTime startOperation) {
+        this.startOperation = startOperation;
+    }
+
+    public void setEndOperation(LocalTime endOperation) {
+        this.endOperation = endOperation;
+    }
+
+    public void setQttySimultServices(int qttySimultServices) {
+        this.qttySimultServices = qttySimultServices;
+    }
 }
