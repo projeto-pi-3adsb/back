@@ -55,15 +55,4 @@ public class HemocenterController {
     public Iterable<Hemocenter> getAllHemocenters() {
         return hemocenterRepository.findAll();
     }
-
-    @PostMapping("/scheduleHemocenter")
-    public ScheduleHemocenter insertSchedule (@RequestBody @Valid ScheduleHemocenterRequest scheduleHemocenterRequest){
-        Optional<ScheduleHemocenter> hemocenterOptional =  scheduleHemocenterRepository.findById(scheduleHemocenterRequest.getHemocenterId());
-        ScheduleHemocenter hemocenter = hemocenterOptional.get();
-
-        ScheduleHemocenter scheduleHemocenter = new ScheduleHemocenter(hemocenter,scheduleHemocenterRequest.getScheduledDate(),scheduleHemocenterRequest.getScheduledTime());
-        return scheduleHemocenterRepository.save(scheduleHemocenter);
-    }
-
-
 }

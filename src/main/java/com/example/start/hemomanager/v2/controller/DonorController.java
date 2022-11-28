@@ -32,8 +32,7 @@ public class DonorController {
     @PostMapping
     public ResponseEntity signIn(@RequestBody DonorSignInDTO donorDTO) {
         if (donorRepository.existsByEmailAndCpf(
-                donorDTO.getEmail(),
-                donorDTO.getCpf())
+            donorDTO.getEmail(), donorDTO.getCpf())
         ) return ResponseEntity.status(422).body("E-mail ou CNPJ já cadastrados.");
 
         Donor donor = new Donor();
@@ -46,8 +45,7 @@ public class DonorController {
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody LoginDTO donorDTO) {
         Donor donor = donorRepository.findByEmailAndPassword(
-                donorDTO.getEmail(),
-                donorDTO.getPassword());
+            donorDTO.getEmail(), donorDTO.getPassword());
         if (donor == null) return ResponseEntity.status(404).build();
 
         return ResponseEntity.status(200).build();
@@ -61,30 +59,5 @@ public class DonorController {
     @GetMapping("/")
     public Iterable<Donor> getAllDonors() {
         return donorRepository.findAll();
-    }
-
-    // Donor management
-//    @PostMapping("/{email}/{password}")
-//    public Donor loginDonor(@PathVariable String email, @PathVariable String password) {
-//        for (Donor currentDonor : donors) {
-//            if (currentDonor.authenticateDonor(email, password)) {
-//                return currentDonor;
-//            }
-//        }
-//        return null;
-//    }
-
-    @PostMapping("/schedule")
-    public Schedule insertSchedule(@RequestBody @Valid ScheduleRequest scheduleRequest){
-        Optional<ScheduleHemocenter> scheduleHemocenterOptional =  scheduleHemocenterRepository.findById(scheduleRequest.getScheduleHemocenterId());
-        Optional<Donor> donorOptional = donorRepository.findById(scheduleRequest.getDonorId());
-        Optional<Hemocenter> hemocenterOptional = hemocenterRepository.findById(scheduleRequest.getHemocenterId());
-
-        ScheduleHemocenter scheduleHemocenter = scheduleHemocenterOptional.get();
-        Donor donor = donorOptional.get();
-        Hemocenter hemocenter = hemocenterOptional.get();
-
-        Schedule schedule = new Schedule(donor,hemocenter,scheduleHemocenter);
-        return scheduleRepository.save(schedule);
     }
 }
