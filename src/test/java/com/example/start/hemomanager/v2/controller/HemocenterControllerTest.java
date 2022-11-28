@@ -66,7 +66,7 @@ class HemocenterControllerTest {
 
         ResponseEntity responseEntity = hemocenterController.signIn(hemocenterSignInDTO);
 
-        assertEquals(200,responseEntity.getStatusCodeValue());
+        assertEquals(201,responseEntity.getStatusCodeValue());
         assertNull(responseEntity.getBody());
 
     }

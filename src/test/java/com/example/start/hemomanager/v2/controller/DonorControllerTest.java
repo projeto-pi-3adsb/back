@@ -74,7 +74,7 @@ class DonorControllerTest {
 
         ResponseEntity responseEntity = donorController.signIn(donorSignDTO);
 
-        assertEquals(200,responseEntity.getStatusCodeValue());
+        assertEquals(201,responseEntity.getStatusCodeValue());
         assertNull(responseEntity.getBody());
 
     }
