@@ -1,8 +1,10 @@
 package com.example.start.hemomanager.v2.repository;
 
 import com.example.start.hemomanager.v2.domain.Hemocenter;
+import com.example.start.hemomanager.v2.dto.HemocenterSignInDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -15,6 +17,5 @@ public interface HemocenterRepository extends JpaRepository<Hemocenter, Integer>
     boolean existsByEmailAndCnpj(String email, String cnpj);
 
     Hemocenter findByEmailAndPassword(String email, String password);
-
 }
 
