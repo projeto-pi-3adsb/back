@@ -50,6 +50,4 @@ public class ScheduleController {
         scheduleRepository.save(schedule);
         return ResponseEntity.status(201).body(schedule);
     }
-
-
 }
