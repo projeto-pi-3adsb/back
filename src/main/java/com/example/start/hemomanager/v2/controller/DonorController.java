@@ -33,8 +33,7 @@ public class DonorController {
     @PostMapping
     public ResponseEntity signIn(@RequestBody DonorSignInDTO donorDTO) {
         if (donorRepository.existsByEmailAndCpf(
-                donorDTO.getEmail(),
-                donorDTO.getCpf())
+            donorDTO.getEmail(), donorDTO.getCpf())
         ) return ResponseEntity.status(422).body("E-mail ou CNPJ já cadastrados.");
 
         Donor donor = new Donor();
@@ -47,9 +46,8 @@ public class DonorController {
     @PostMapping("/current")
     public ResponseEntity loginWithReturn(@RequestBody LoginDTO donorDTO) {
         Donor donor = donorRepository.findByEmailAndPassword(
-                donorDTO.getEmail(),
-                donorDTO.getPassword());
-        if (donor == null) return ResponseEntity.status(404).body("Email ou senha incorretos.");
+            donorDTO.getEmail(), donorDTO.getPassword());
+        if (donor == null) return ResponseEntity.status(404).build();
 
         return ResponseEntity.status(200).body(donor);
     }
