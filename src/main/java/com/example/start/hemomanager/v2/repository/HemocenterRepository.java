@@ -14,6 +14,8 @@ public interface HemocenterRepository extends JpaRepository<Hemocenter, Integer>
 //    @Query("SELECT new com.example.start.hemomanager.v2.response.HemocenterSimpleResponse (h.uuid, h.name, h.zipCode, h.zipNumber) FROM Hemocenter h")
 //    Iterable<HemocenterSimpleResponse> findNameAndCep();
 
+    Hemocenter findById(int id);
+
     boolean existsByEmailAndCnpj(String email, String cnpj);
 
     Hemocenter findByEmailAndPassword(String email, String password);
