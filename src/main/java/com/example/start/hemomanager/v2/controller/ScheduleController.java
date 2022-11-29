@@ -9,6 +9,7 @@ import com.example.start.hemomanager.v2.repository.HemocenterRepository;
 import com.example.start.hemomanager.v2.repository.ScheduleHemocenterRepository;
 import com.example.start.hemomanager.v2.repository.ScheduleRepository;
 import com.example.start.hemomanager.v2.request.DonorFinderRequest;
+import com.example.start.hemomanager.v2.request.HemocenterFinderRequest;
 import com.example.start.hemomanager.v2.request.ScheduleHemocenterRequest;
 import com.example.start.hemomanager.v2.request.ScheduleRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,6 @@ import java.util.Optional;
 
 @RestController @RequestMapping("/schedules") @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ScheduleController {
-
     @Autowired private DonorRepository donorRepository;
     @Autowired private ScheduleHemocenterRepository scheduleHemocenterRepository;
     @Autowired private ScheduleRepository scheduleRepository;
@@ -35,14 +35,27 @@ public class ScheduleController {
     }
 
     @GetMapping("/donor")
-    public ResponseEntity<Donor> findDonorById(@RequestBody DonorFinderRequest donorFinderRequest) {
+    public ResponseEntity<Schedule> findDonorById(@RequestBody DonorFinderRequest donorFinderRequest) {
         int id = donorFinderRequest.getId();
 
         if (donorRepository.findById(id) == null) {
             return ResponseEntity.status(404).build();
         }
-        Donor donor = donorRepository.findById(id);
-        return ResponseEntity.status(200).body(donor);
+        Schedule schedule = scheduleRepository.findByDonorId(id);
+        Schedule scheduleHemocenter = scheduleRepository.save(schedule);
+        return ResponseEntity.status(200).body(schedule);
+    }
+
+    @GetMapping("/hemocenter")
+    public ResponseEntity<Schedule> findByHemocenterId(@RequestBody HemocenterFinderRequest hemocenterFinderRequest) {
+        int id = hemocenterFinderRequest.getId();
+
+        if (hemocenterRepository.findById(id) == null) {
+            return ResponseEntity.status(404).build();
+        }
+        Schedule schedule = scheduleRepository.findByHemocenterId(id);
+        Schedule scheduleHemocenter = scheduleRepository.save(schedule);
+        return ResponseEntity.status(200).body(schedule);
     }
 
     @PostMapping
