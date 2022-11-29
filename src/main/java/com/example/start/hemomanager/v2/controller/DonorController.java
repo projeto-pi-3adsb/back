@@ -84,4 +84,14 @@ public class DonorController {
         Schedule schedule = new Schedule(donorOptional,hemocenter,scheduleHemocenter);
         return scheduleRepository.save(schedule);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Donor> updateDonor(@PathVariable int id, @RequestBody Donor donorDTO) {
+        if (donorRepository.existsById(id)) {
+            donorDTO.setId(id);
+            donorRepository.save(donorDTO);
+            return ResponseEntity.status(200).body(donorDTO);
+        }
+        return ResponseEntity.status(404).build();
+    }
 }
