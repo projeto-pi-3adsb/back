@@ -40,7 +40,7 @@ public class PlateletController {
             saida = new Formatter(arq);
             Optional<Donor> donorOptional = donorRepository.findById(donorId);
             Donor donor = donorOptional.get();
-            saida.format("%s; %s; %s; %s; %s; %s\n",
+            saida.format("%s;%s;%s;%s;%s;%s\n",
                     donor.getName(),
                     donor.getCpf(),
                     donor.getEmail(),
@@ -174,13 +174,10 @@ public class PlateletController {
 
     @PostMapping("/upload-txt")
     public String uploadTxt(@RequestParam("file") MultipartFile file) throws IOException {
-        FileReader arq = null;
-        Scanner entrada = null;
-
         try {
             Files.copy(file.getInputStream(), this.root.resolve(Objects.requireNonNull(file.getOriginalFilename())));
 
-            arq = new FileReader(file.getOriginalFilename());
+            FileReader arq = new FileReader(file.getOriginalFilename());
             BufferedReader lerArq = new BufferedReader(arq);
 
             Donor donor = new Donor(
@@ -206,5 +203,94 @@ public class PlateletController {
             return e.getMessage();
         }
         return "Sucesso";
+    }
+
+    @GetMapping("/dowload-modelo-csv")
+    public ResponseEntity<Resource> dowloadsModeloCsv() throws FileNotFoundException {
+        FileWriter arq = null;
+        Formatter saida = null;
+        Boolean deuRuim = false;
+        String nomeArq = "Donors.csv";
+
+        try {
+            arq = new FileWriter(nomeArq);
+            saida = new Formatter(arq);
+            saida.format("NOME;EMAIL;CPF;DATA DE NASCIMENTO;GÊNERO;TELEFONE\n");
+
+        } catch (IOException erro) {
+            System.out.println("Erro ao abrir o aquivo");
+            System.exit(1);
+        } catch (FormatterClosedException erro) {
+            System.out.println("Erro ao gravar o aquivo");
+            deuRuim = true;
+        } finally {
+            saida.close();
+            try {
+                arq.close();
+            } catch (IOException erro) {
+                System.out.println("Erro ao fechar o aquivo");
+                deuRuim = true;
+            }
+            if (deuRuim) {
+                System.exit(1);
+            }
+        }
+
+        File initialFile = new File(nomeArq);
+        InputStream targetStream = new FileInputStream(initialFile);
+
+        InputStreamResource file = new InputStreamResource(targetStream);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + nomeArq)
+                .contentType(MediaType.parseMediaType("application/csv"))
+                .body(file);
+    }
+
+    @GetMapping("/dowload-modelo-txt")
+    public ResponseEntity<Resource> dowloadsModeloTxt() throws FileNotFoundException {
+        FileWriter arq = null;
+        Formatter saida = null;
+        Boolean deuRuim = false;
+        String nomeArq = "Donors.txt";
+
+        try {
+            arq = new FileWriter(nomeArq);
+            saida = new Formatter(arq);
+            saida.format("Nome completo\n" +
+                            "Email\n" +
+                            "CPF\n" +
+                            "Data de nascimento\n" +
+                            "Gênero\n" +
+                            "Telefone\n"
+                            );
+        } catch (IOException erro) {
+            System.out.println("Erro ao abrir o aquivo");
+            System.exit(1);
+        } catch (FormatterClosedException erro) {
+            System.out.println("Erro ao gravar o aquivo");
+            deuRuim = true;
+        } finally {
+            saida.close();
+            try {
+                arq.close();
+            } catch (IOException erro) {
+                System.out.println("Erro ao fechar o aquivo");
+                deuRuim = true;
+            }
+            if (deuRuim) {
+                System.exit(1);
+            }
+        }
+
+        File initialFile = new File(nomeArq);
+        InputStream targetStream = new FileInputStream(initialFile);
+
+        InputStreamResource file = new InputStreamResource(targetStream);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + nomeArq)
+                .contentType(MediaType.parseMediaType("application/txt"))
+                .body(file);
     }
 }
