@@ -29,6 +29,13 @@ public class Schedule {
         this.scheduleHemocenter = scheduleHemocenter;
     }
 
+    public Schedule(Integer uuid, Donor scheduledDonor, Hemocenter hemocenter, ScheduleHemocenter scheduleHemocenter) {
+        this.uuid = uuid;
+        this.scheduledDonor = scheduledDonor;
+        this.hemocenter = hemocenter;
+        this.scheduleHemocenter = scheduleHemocenter;
+    }
+
     public Integer getUuid() {
         return uuid;
     }
