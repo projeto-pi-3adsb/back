@@ -8,6 +8,8 @@ import com.example.start.hemomanager.v2.repository.DonorRepository;
 import com.example.start.hemomanager.v2.repository.HemocenterRepository;
 import com.example.start.hemomanager.v2.repository.ScheduleHemocenterRepository;
 import com.example.start.hemomanager.v2.repository.ScheduleRepository;
+import com.example.start.hemomanager.v2.request.DonorFinderRequest;
+import com.example.start.hemomanager.v2.request.ScheduleHemocenterRequest;
 import com.example.start.hemomanager.v2.request.ScheduleRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,22 +34,28 @@ public class ScheduleController {
         return scheduleRepository.findAll();
     }
 
-    @PostMapping()
-    public ResponseEntity<Schedule> insertSchedule(@RequestBody @Valid ScheduleRequest scheduleRequest){
-        Optional<ScheduleHemocenter> scheduleHemocenterOptional =  scheduleHemocenterRepository.findById(scheduleRequest.getScheduleHemocenterId());
-        Optional<Donor> donorOptional = donorRepository.findById(scheduleRequest.getDonorId());
-        Optional<Hemocenter> hemocenterOptional = hemocenterRepository.findById(scheduleRequest.getHemocenterId());
+    @GetMapping("/donor")
+    public ResponseEntity<Donor> findDonorById(@RequestBody DonorFinderRequest donorFinderRequest) {
+        int id = donorFinderRequest.getId();
 
-        if (scheduleHemocenterOptional.isEmpty() || donorOptional.isEmpty() || hemocenterOptional.isEmpty()) {
+        if (donorRepository.findById(id) == null) {
+            return ResponseEntity.status(404).build();
+        }
+        Donor donor = donorRepository.findById(id);
+        return ResponseEntity.status(200).body(donor);
+    }
+
+    @PostMapping
+    public ResponseEntity<ScheduleHemocenter> insertSchedule(@RequestBody @Valid ScheduleHemocenterRequest scheduleRequest){
+        Optional<ScheduleHemocenter> hemocenterOptional = scheduleHemocenterRepository.findById(scheduleRequest.getHemocenterId());
+        ScheduleHemocenter hemocenter = hemocenterOptional.get();
+        if (hemocenterOptional.isEmpty()) {
             return ResponseEntity.status(404).build();
         }
 
-        ScheduleHemocenter scheduleHemocenter = scheduleHemocenterOptional.get();
-        Donor donor = donorOptional.get();
-        Hemocenter hemocenter = hemocenterOptional.get();
+        ScheduleHemocenter scheduleHemocenter = new ScheduleHemocenter(hemocenter, scheduleRequest.getScheduledDate(), scheduleRequest.getScheduledTime());
 
-        Schedule schedule = new Schedule(donor,hemocenter,scheduleHemocenter);
-        scheduleRepository.save(schedule);
-        return ResponseEntity.status(201).body(schedule);
+        scheduleHemocenterRepository.save(scheduleHemocenter);
+        return ResponseEntity.status(201).body(scheduleHemocenter);
     }
 }
