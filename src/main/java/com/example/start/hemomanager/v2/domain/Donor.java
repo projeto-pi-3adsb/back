@@ -49,6 +49,15 @@ public class Donor extends User {
         this.validDonor = validDonor;
     }
 
+    public Donor(String name, String email, Integer id, String cpf, LocalDate birthDate, String sex, String phone, boolean validDonor) {
+        this.id = id;
+        this.cpf = cpf;
+        this.birthDate = birthDate;
+        this.sex = sex;
+        this.phone = phone;
+        this.validDonor = validDonor;
+    }
+
     public Integer getId() {
         return id;
     }
