@@ -16,6 +16,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -31,7 +32,7 @@ public class StockController {
     List<Stock> bags = new ArrayList<>();
 
     @PostMapping("/{hemocenter}")
-    public ResponseEntity insertBag(@PathVariable Integer hemocenter, @RequestBody StockDTO stockDTO) {
+    public ResponseEntity insertBag(@Nullable Integer hemocenter, StockDTO stockDTO) {
         String bloodType = stockDTO.getBloodType();
 
         if (!hemocenterRepository.existsById(hemocenter)) {

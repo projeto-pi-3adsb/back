@@ -1,6 +1,7 @@
 package com.example.start.hemomanager.v2.controller;
 
 import com.example.start.hemomanager.v2.domain.Donor;
+import com.example.start.hemomanager.v2.dto.StockDTO;
 import com.example.start.hemomanager.v2.repository.DonorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -12,8 +13,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 import java.io.IOException;
@@ -173,8 +176,39 @@ public class PlateletController {
         return "Sucesso";
     }
 
-    @PostMapping("/upload-txt")
-    public String uploadTxt(@RequestParam("file") MultipartFile file) throws IOException {
+    @GetMapping(value = "/arquivo-txt", produces = "text/plain")
+    public ResponseEntity<byte[]> buscaArquivoTxt() {
+        String idProprietario = "Alex Barreira;alex.kbassssdhfhashdf@gmail.com;67901355026;2000-05-10;M;11912345678";
+
+        byte[] arquivoTxt = idProprietario.getBytes(StandardCharsets.UTF_8);
+
+        return ResponseEntity
+                .status(200)
+                .header("content-disposition", "attachment; filename=\"item.txt\"")
+                .body(arquivoTxt);
+    }
+
+    @PostMapping(value = "/arquivo-txt")
+    public ResponseEntity salvaTxt(
+            @RequestParam("file") MultipartFile file
+    ) throws IOException {
+        StockController controller = new StockController();
+        String itemString = new String(file.getBytes(), "UTF-8");
+        System.out.println(itemString);
+        Integer id = Integer.valueOf(itemString.substring(0, 1));
+        String bloodType = itemString.substring(3, 5);
+        LocalDate descricao = LocalDate.parse(itemString.substring(6, 16));
+
+        StockDTO dto = new StockDTO(bloodType, descricao);
+        controller.insertBag(id, dto);
+        return ResponseEntity.status(201).build();
+
+    }
+
+
+
+    @PostMapping(value = "/upload-txt", consumes = "text/*")
+    public String uploadTxt(@RequestBody byte[] fileTxt, MultipartFile file) throws IOException {
         try {
             Files.copy(file.getInputStream(), this.root.resolve(Objects.requireNonNull(file.getOriginalFilename())));
 
