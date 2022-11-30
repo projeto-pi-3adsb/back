@@ -47,7 +47,7 @@ public class HemocenterController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Hemocenter> updateDonor(@PathVariable int id, @RequestBody Hemocenter hemocenterDTO) {
+    public ResponseEntity<Hemocenter> updateHemocenter(@PathVariable int id, @RequestBody Hemocenter hemocenterDTO) {
         if (hemocenterRepository.existsById(id)) {
             hemocenterDTO.setUuid(id);
             hemocenterRepository.save(hemocenterDTO);
