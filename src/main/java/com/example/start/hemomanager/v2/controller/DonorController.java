@@ -92,4 +92,12 @@ public class DonorController {
         }
         return ResponseEntity.status(404).build();
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<Donor> findDonor(@PathVariable int id) {
+        if (donorRepository.existsById(id)) {
+            Donor donor = donorRepository.findById(id);
+            return ResponseEntity.status(200).body(donor);
+        }
+        return ResponseEntity.status(404).build();
+    }
 }

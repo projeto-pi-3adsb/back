@@ -70,4 +70,12 @@ public class HemocenterController {
         }
         return ResponseEntity.status(404).build();
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<Hemocenter> findHemocenter(@PathVariable int id) {
+        if (hemocenterRepository.existsById(id)) {
+            Hemocenter hemocenter = hemocenterRepository.findById(id);
+            return ResponseEntity.status(200).body(hemocenter);
+        }
+        return ResponseEntity.status(404).build();
+    }
 }
