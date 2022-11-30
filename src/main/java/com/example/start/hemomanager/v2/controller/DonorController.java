@@ -76,10 +76,11 @@ public class DonorController {
     public Schedule insertSchedule(@RequestBody @Valid ScheduleRequest scheduleRequest){
         Optional<ScheduleHemocenter> scheduleHemocenterOptional =  scheduleHemocenterRepository.findById(scheduleRequest.getScheduleHemocenterId());
         Donor donorOptional = donorRepository.findById(scheduleRequest.getDonorId());
-        Hemocenter hemocenterOptional = hemocenterRepository.findById(scheduleRequest.getHemocenterId());
+        Optional<Hemocenter> hemocenterOptional = hemocenterRepository.findById(scheduleRequest.getHemocenterId());
+        Hemocenter hemocenter = hemocenterOptional.get();
         ScheduleHemocenter scheduleHemocenter = scheduleHemocenterOptional.get();
 
-        Schedule schedule = new Schedule(donorOptional,hemocenterOptional,scheduleHemocenter);
+        Schedule schedule = new Schedule(donorOptional,hemocenter,scheduleHemocenter);
         return scheduleRepository.save(schedule);
     }
 

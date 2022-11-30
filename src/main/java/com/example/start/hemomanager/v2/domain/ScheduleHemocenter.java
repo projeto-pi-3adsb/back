@@ -10,11 +10,11 @@ public class ScheduleHemocenter {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer uuid;
     @ManyToOne
-    private ScheduleHemocenter hemocenter;
+    private Hemocenter hemocenter;
     private LocalDate scheduledDate;
     private LocalTime scheduledTime;
 
-    public ScheduleHemocenter(ScheduleHemocenter hemocenter, LocalDate scheduledDate, LocalTime scheduledTime) {
+    public ScheduleHemocenter(Hemocenter hemocenter, LocalDate scheduledDate, LocalTime scheduledTime) {
         this.hemocenter = hemocenter;
         this.scheduledDate = scheduledDate;
         this.scheduledTime = scheduledTime;
@@ -30,11 +30,11 @@ public class ScheduleHemocenter {
         this.uuid = uuid;
     }
 
-    public ScheduleHemocenter gethemocenter() {
+    public Hemocenter gethemocenter() {
         return hemocenter;
     }
 
-    public void sethemocenter(ScheduleHemocenter hemocenter) {
+    public void sethemocenter(Hemocenter hemocenter) {
         this.hemocenter = hemocenter;
     }
 
