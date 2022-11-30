@@ -1,5 +1,6 @@
 package com.example.start.hemomanager.v2.controller;
 
+import com.example.start.hemomanager.v2.domain.Donor;
 import com.example.start.hemomanager.v2.domain.Hemocenter;
 import com.example.start.hemomanager.v2.domain.ScheduleHemocenter;
 import com.example.start.hemomanager.v2.dto.HemocenterSignInDTO;
@@ -45,7 +46,15 @@ public class HemocenterController {
         return ResponseEntity.status(200).body(hemocenter);
     }
 
-
+    @PutMapping("/{id}")
+    public ResponseEntity<Hemocenter> updateDonor(@PathVariable int id, @RequestBody Hemocenter hemocenterDTO) {
+        if (hemocenterRepository.existsById(id)) {
+            hemocenterDTO.setUuid(id);
+            hemocenterRepository.save(hemocenterDTO);
+            return ResponseEntity.status(200).body(hemocenterDTO);
+        }
+        return ResponseEntity.status(404).build();
+    }
 
     @GetMapping()
     public List<Hemocenter> getAllHemocenters() {
