@@ -13,9 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.*;
 import java.util.*;
@@ -111,5 +113,12 @@ public class StockController {
         );
 
         return saida;
+    }
+    @DeleteMapping("/{bagId}")
+    public void deleteBag(@PathVariable Integer bagId) {
+        if (!stockRepository.existsById(bagId)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Bag not found");
+        }
+        stockRepository.deleteById(bagId);
     }
 }
