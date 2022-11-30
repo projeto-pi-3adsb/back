@@ -1,6 +1,5 @@
 package com.example.start.hemomanager.v2.controller;
 
-import com.example.start.hemomanager.v2.domain.Donor;
 import com.example.start.hemomanager.v2.domain.Hemocenter;
 import com.example.start.hemomanager.v2.domain.ScheduleHemocenter;
 import com.example.start.hemomanager.v2.dto.HemocenterSignInDTO;
@@ -10,6 +9,7 @@ import com.example.start.hemomanager.v2.repository.ScheduleHemocenterRepository;
 import com.example.start.hemomanager.v2.request.ScheduleHemocenterRequest;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,29 +52,10 @@ public class HemocenterController {
 
     @PostMapping("/scheduleHemocenter")
     public ScheduleHemocenter insertSchedule (@RequestBody @Valid ScheduleHemocenterRequest scheduleHemocenterRequest){
-        Optional<ScheduleHemocenter> hemocenterOptional =  scheduleHemocenterRepository.findById(scheduleHemocenterRequest.getHemocenterId());
-        ScheduleHemocenter hemocenter = hemocenterOptional.get();
+        Optional<Hemocenter> hemocenterOptional = hemocenterRepository.findById(scheduleHemocenterRequest.getHemocenterId());
+        Hemocenter hemocenter = hemocenterOptional.get();
 
         ScheduleHemocenter scheduleHemocenter = new ScheduleHemocenter(hemocenter,scheduleHemocenterRequest.getScheduledDate(),scheduleHemocenterRequest.getScheduledTime());
         return scheduleHemocenterRepository.save(scheduleHemocenter);
-    }
-
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Hemocenter> updateDonor(@PathVariable int id, @RequestBody Hemocenter hemocenterDTO) {
-        if (hemocenterRepository.existsById(id)) {
-            hemocenterDTO.setUuid(id);
-            hemocenterRepository.save(hemocenterDTO);
-            return ResponseEntity.status(200).body(hemocenterDTO);
-        }
-        return ResponseEntity.status(404).build();
-    }
-    @GetMapping("/{id}")
-    public ResponseEntity<Hemocenter> findHemocenter(@PathVariable int id) {
-        if (hemocenterRepository.existsById(id)) {
-            Hemocenter hemocenter = hemocenterRepository.findById(id);
-            return ResponseEntity.status(200).body(hemocenter);
-        }
-        return ResponseEntity.status(404).build();
     }
 }

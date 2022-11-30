@@ -1,5 +1,6 @@
 package com.example.start.hemomanager.v2.controller;
 
+import com.example.start.hemomanager.v2.domain.Hemocenter;
 import com.example.start.hemomanager.v2.domain.Schedule;
 import com.example.start.hemomanager.v2.domain.ScheduleHemocenter;
 import com.example.start.hemomanager.v2.repository.DonorRepository;
@@ -57,8 +58,8 @@ public class ScheduleController {
 
     @PostMapping
     public ResponseEntity<ScheduleHemocenter> insertSchedule(@RequestBody @Valid ScheduleHemocenterRequest scheduleRequest){
-        Optional<ScheduleHemocenter> hemocenterOptional = scheduleHemocenterRepository.findById(scheduleRequest.getHemocenterId());
-        ScheduleHemocenter hemocenter = hemocenterOptional.get();
+        Optional<Hemocenter> hemocenterOptional = hemocenterRepository.findById(scheduleRequest.getHemocenterId());
+        Hemocenter hemocenter = hemocenterOptional.get();
         if (hemocenterOptional.isEmpty()) {
             return ResponseEntity.status(404).build();
         }
