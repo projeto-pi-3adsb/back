@@ -17,6 +17,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.http.ResponseEntity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @SpringBootTest
 class HemocenterControllerTest {
@@ -89,49 +92,71 @@ class HemocenterControllerTest {
         assertNull(responseEntity.getBody());
     }
 
-//    @Test
-//    @DisplayName("Testar status 200 da função 'logar' do HemocenterController")
-//    public void segundoTesteLogin(){
-//
-//        LoginDTO hemocenterDTO = new LoginDTO();
-//
-//        hemocenterDTO.setEmail("juliacarolina@gmail.com");
-//        hemocenterDTO.setPassword("juhjuh123@");
-//        Mockito.when(hemocenterRepository.findByEmailAndPassword(
-//                hemocenterDTO.getEmail(),
-//                hemocenterDTO.getPassword())).thenReturn(new HemocenterSignInDTO());
-//
-//        ResponseEntity responseEntity = hemocenterController.loginWithReturn(hemocenterDTO);
-//
-//        assertEquals(200,responseEntity.getStatusCodeValue());
-//        assertNull(responseEntity.getBody());
-//
-//    }
-//
-//    @Test
-//    @DisplayName("Testar GET do getAllHemocenters do HemocenterController")
-//    public void testeGetAllHemocenters(){
-//
-//
-//        Hemocenter hemocenter = new Hemocenter();
-//
-//        Mockito.when(hemocenterRepository.save(hemocenter)).thenReturn(hemocenter);
-//
-//        assertInstanceOf(Hemocenter.class, hemocenterController.insertHemocenter(hemocenter));
-//
-//    }
-//
-//
-//    @Test
-//    @DisplayName("Testar o POST do .save Hemocenter")
-//    public void testePostSave(){
-//
-//            Hemocenter hemocenter = new Hemocenter();
-//
-//        Mockito.when(hemocenterRepository.save(hemocenter)).thenReturn(hemocenter);
-//
-//        assertInstanceOf(Hemocenter.class, hemocenterController.insertHemocenter(hemocenter));
-//    }
+    @Test
+    @DisplayName("Testar status 200 da função 'logar' do HemocenterController")
+    public void segundoTesteLogin(){
+
+        LoginDTO hemocenterDTO = new LoginDTO();
+
+        hemocenterDTO.setEmail("juliacarolina@gmail.com");
+        hemocenterDTO.setPassword("juhjuh123@");
+
+        Hemocenter hemocenter = new Hemocenter();
+        hemocenter.setEmail("juliacarolina@gmail.com");
+        hemocenter.setPassword("juhjuh123@");
+        Mockito.when(hemocenterRepository.findByEmailAndPassword(
+                hemocenterDTO.getEmail(),
+                hemocenterDTO.getPassword())).thenReturn(hemocenter);
+
+        ResponseEntity responseEntity = hemocenterController.loginWithReturn(hemocenterDTO);
+
+        assertEquals(200,responseEntity.getStatusCodeValue());
+
+
+    }
+
+    @Test
+    @DisplayName("Testar GET do getAllHemocenters do HemocenterController")
+    public void testeGetAllHemocenters(){
+
+        Hemocenter hemocenter1 = new Hemocenter();
+        hemocenter1.setCnpj("123");
+        Hemocenter hemocenter2 = new Hemocenter();
+        List<Hemocenter> lista = new ArrayList<>();
+        lista.add(hemocenter1);
+        lista.add(hemocenter2);
+
+
+        Mockito.when(hemocenterRepository.findAll()).thenReturn(lista);
+
+        List<Hemocenter> listaTeste = hemocenterController.getAllHemocenters();
+
+        assertEquals(listaTeste.size(),2);
+        assertEquals(listaTeste.get(0).getCnpj(),"123");
+
+    }
+
+
+    @Test
+    @DisplayName("Testar o POST do .save Hemocenter")
+    public void testePostSave(){
+
+        HemocenterSignInDTO dto = new HemocenterSignInDTO();
+        dto.setEmail("juliacarolina@gmail.com");
+        dto.setPassword("juhjuh123@");
+
+        Hemocenter hemocenter = new Hemocenter();
+        hemocenter.setEmail("juliacarolina@gmail.com");
+        hemocenter.setPassword("juhjuh123@");
+        Mockito.when(hemocenterRepository.existsByEmailAndCnpj(dto.getEmail(),dto.getPassword()))
+                        .thenReturn(false);
+
+        Mockito.when(hemocenterRepository.save(hemocenter)).thenReturn(hemocenter);
+        ResponseEntity hemocenterSalvo = hemocenterController.signIn(dto);
+
+        assertEquals(hemocenterSalvo.getStatusCodeValue(),201);
+
+    }
 
 
 }

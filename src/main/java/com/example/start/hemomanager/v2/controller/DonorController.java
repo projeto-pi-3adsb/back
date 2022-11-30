@@ -75,14 +75,29 @@ public class DonorController {
     @PostMapping("/schedule")
     public Schedule insertSchedule(@RequestBody @Valid ScheduleRequest scheduleRequest){
         Optional<ScheduleHemocenter> scheduleHemocenterOptional =  scheduleHemocenterRepository.findById(scheduleRequest.getScheduleHemocenterId());
-        Optional<Donor> donorOptional = donorRepository.findById(scheduleRequest.getDonorId());
-        Optional<Hemocenter> hemocenterOptional = hemocenterRepository.findById(scheduleRequest.getHemocenterId());
-
+        Donor donorOptional = donorRepository.findById(scheduleRequest.getDonorId());
+        Hemocenter hemocenterOptional = hemocenterRepository.findById(scheduleRequest.getHemocenterId());
         ScheduleHemocenter scheduleHemocenter = scheduleHemocenterOptional.get();
-        Donor donor = donorOptional.get();
-        Hemocenter hemocenter = hemocenterOptional.get();
 
-        Schedule schedule = new Schedule(donor,hemocenter,scheduleHemocenter);
+        Schedule schedule = new Schedule(donorOptional,hemocenterOptional,scheduleHemocenter);
         return scheduleRepository.save(schedule);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Donor> updateDonor(@PathVariable int id, @RequestBody Donor donorDTO) {
+        if (donorRepository.existsById(id)) {
+            donorDTO.setId(id);
+            donorRepository.save(donorDTO);
+            return ResponseEntity.status(200).body(donorDTO);
+        }
+        return ResponseEntity.status(404).build();
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<Donor> findDonor(@PathVariable int id) {
+        if (donorRepository.existsById(id)) {
+            Donor donor = donorRepository.findById(id);
+            return ResponseEntity.status(200).body(donor);
+        }
+        return ResponseEntity.status(404).build();
     }
 }

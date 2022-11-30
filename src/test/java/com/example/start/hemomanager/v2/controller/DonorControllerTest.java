@@ -95,24 +95,29 @@ class DonorControllerTest {
 //         assertNotNull(responseEntity.getBody());
     }
 
-//    @Test
-//    @DisplayName("Testar status 200 da função 'logar' do DonorController")
-//    public void segundoTesteLogin(){
-//
-//        LoginDTO donorDTO = new LoginDTO();
-//
-//        donorDTO.setEmail("juliacarolina@gmail.com");
-//        donorDTO.setPassword("juhjuh123@");
-//        Mockito.when(donorRepository.findByEmailAndPassword(
-//                donorDTO.getEmail(),
-//                donorDTO.getPassword())).thenReturn(new DonorSignInDTO());
-//
-//        ResponseEntity responseEntity = donorController.loginWithReturn(donorDTO);
-//
-//        assertEquals(200,responseEntity.getStatusCodeValue());
-//        assertNull(responseEntity.getBody());
-//
-//    }
+    @Test
+    @DisplayName("Testar status 200 da função 'logar' do DonorController")
+    public void segundoTesteLogin(){
+
+        Donor donor = new Donor();
+        donor.setEmail("juliacarolina@gmail.com");
+        donor.setPassword("juhjuh123@");
+
+        LoginDTO donorDTO = new LoginDTO();
+
+        donorDTO.setEmail("juliacarolina@gmail.com");
+        donorDTO.setPassword("juhjuh123@");
+
+        Mockito.when(donorRepository.findByEmailAndPassword(
+                donorDTO.getEmail(),
+                donorDTO.getPassword())).thenReturn(donor);
+
+        ResponseEntity responseEntity = donorController.loginWithReturn(donorDTO);
+
+        assertEquals(200,responseEntity.getStatusCodeValue());
+
+
+    }
 
     @Test
     @DisplayName("Testar o POST do .save Donor")
