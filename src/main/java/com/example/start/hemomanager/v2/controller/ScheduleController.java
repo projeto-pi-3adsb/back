@@ -1,7 +1,5 @@
 package com.example.start.hemomanager.v2.controller;
 
-import com.example.start.hemomanager.v2.domain.Donor;
-import com.example.start.hemomanager.v2.domain.Hemocenter;
 import com.example.start.hemomanager.v2.domain.Schedule;
 import com.example.start.hemomanager.v2.domain.ScheduleHemocenter;
 import com.example.start.hemomanager.v2.repository.DonorRepository;
@@ -11,7 +9,6 @@ import com.example.start.hemomanager.v2.repository.ScheduleRepository;
 import com.example.start.hemomanager.v2.request.DonorFinderRequest;
 import com.example.start.hemomanager.v2.request.HemocenterFinderRequest;
 import com.example.start.hemomanager.v2.request.ScheduleHemocenterRequest;
-import com.example.start.hemomanager.v2.request.ScheduleRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -70,5 +67,14 @@ public class ScheduleController {
 
         scheduleHemocenterRepository.save(scheduleHemocenter);
         return ResponseEntity.status(201).body(scheduleHemocenter);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Optional<ScheduleHemocenter>> findScheduleHemocenter(@PathVariable int id) {
+        if (scheduleHemocenterRepository.existsById(id)) {
+            Optional<ScheduleHemocenter> scheduleHemocenter = scheduleHemocenterRepository.findById(id);
+            return ResponseEntity.status(200).body(scheduleHemocenter);
+        }
+        return ResponseEntity.status(404).build();
     }
 }
