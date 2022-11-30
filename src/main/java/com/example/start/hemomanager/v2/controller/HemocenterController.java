@@ -45,6 +45,8 @@ public class HemocenterController {
         return ResponseEntity.status(200).body(hemocenter);
     }
 
+
+
     @GetMapping()
     public List<Hemocenter> getAllHemocenters() {
         return hemocenterRepository.findAll();
@@ -58,4 +60,5 @@ public class HemocenterController {
         ScheduleHemocenter scheduleHemocenter = new ScheduleHemocenter(hemocenter,scheduleHemocenterRequest.getScheduledDate(),scheduleHemocenterRequest.getScheduledTime());
         return scheduleHemocenterRepository.save(scheduleHemocenter);
     }
+
 }

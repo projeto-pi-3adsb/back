@@ -57,7 +57,7 @@ public class ScheduleController {
     }
 
     @PostMapping
-    public ResponseEntity<ScheduleHemocenter> insertSchedule(@RequestBody @Valid ScheduleHemocenterRequest scheduleRequest){
+    public ResponseEntity<ScheduleHemocenter> insertDateHour(@RequestBody @Valid ScheduleHemocenterRequest scheduleRequest){
         Optional<Hemocenter> hemocenterOptional = hemocenterRepository.findById(scheduleRequest.getHemocenterId());
         Hemocenter hemocenter = hemocenterOptional.get();
         if (hemocenterOptional.isEmpty()) {

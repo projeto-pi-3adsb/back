@@ -16,5 +16,7 @@ public interface HemocenterRepository extends JpaRepository<Hemocenter, Integer>
     boolean existsByEmailAndCnpj(String email, String cnpj);
 
     Hemocenter findByEmailAndPassword(String email, String password);
+
+
 }
 
