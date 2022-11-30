@@ -77,7 +77,7 @@ public class StockController {
 
         try {
             FileWriter arq = new FileWriter(nomeArq);
-            Formatter saida = this.funcaoDoInferno(stockList, new Formatter(arq));
+            Formatter saida = this.formaterCsvByRe(stockList, new Formatter(arq));
             saida.close();
             arq.close();
         } catch (IOException erro) {
@@ -98,16 +98,16 @@ public class StockController {
                 .body(file);
     }
 
-    private Formatter funcaoDoInferno(List<StockFullResponse> stockList, Formatter saida) {
+    private Formatter formaterCsvByRe(List<StockFullResponse> stockList, Formatter saida) {
         if (stockList.size() > 1) {
-            funcaoDoInferno(stockList.subList(0, stockList.size()-1), saida);
+            formaterCsvByRe(stockList.subList(0, stockList.size()-1), saida);
         }
 
-        StockFullResponse tockStock = stockList.get(stockList.size()-1);
+        StockFullResponse stock = stockList.get(stockList.size()-1);
         saida.format("%s;%s;%s;%s;\n",
-            tockStock.getBloodType(),
-            tockStock.getCollectionDate(),
-            tockStock.getInsertDate()
+            stock.getBloodType(),
+            stock.getCollectionDate(),
+            stock.getInsertDate()
         );
 
         return saida;
