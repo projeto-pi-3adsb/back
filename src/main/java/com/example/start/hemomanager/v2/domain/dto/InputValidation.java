@@ -1,4 +1,4 @@
-package com.example.start.hemomanager.v2.dto;
+package com.example.start.hemomanager.v2.domain.dto;
 
 public class InputValidation {
     public boolean validateDonorSex(String sex) {

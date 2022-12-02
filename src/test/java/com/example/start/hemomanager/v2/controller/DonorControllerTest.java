@@ -1,15 +1,11 @@
 package com.example.start.hemomanager.v2.controller;
 import com.example.start.hemomanager.v2.domain.Donor;
-import com.example.start.hemomanager.v2.domain.Hemocenter;
-import com.example.start.hemomanager.v2.domain.Schedule;
-import com.example.start.hemomanager.v2.domain.ScheduleHemocenter;
-import com.example.start.hemomanager.v2.dto.DonorSignInDTO;
-import com.example.start.hemomanager.v2.dto.LoginDTO;
+import com.example.start.hemomanager.v2.domain.dto.DonorSignInDTO;
+import com.example.start.hemomanager.v2.domain.dto.LoginDTO;
 import com.example.start.hemomanager.v2.repository.DonorRepository;
 import com.example.start.hemomanager.v2.repository.HemocenterRepository;
 import com.example.start.hemomanager.v2.repository.ScheduleHemocenterRepository;
 import com.example.start.hemomanager.v2.repository.ScheduleRepository;
-import com.example.start.hemomanager.v2.request.ScheduleRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -18,9 +14,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.http.ResponseEntity;
-
-import java.util.ArrayList;
-import java.util.Optional;
 
 @SpringBootTest
 class DonorControllerTest {
@@ -50,7 +43,7 @@ class DonorControllerTest {
         donorSignDTO.setCpf("44318783863");
         Mockito.when(donorRepository.existsByEmailAndCpf(donorSignDTO.getEmail(), donorSignDTO.getCpf())).thenReturn(true);
 
-        ResponseEntity responseEntity = donorController.signIn(donorSignDTO);
+        ResponseEntity responseEntity = donorController.createDonor(donorSignDTO);
 
         assertEquals(422,responseEntity.getStatusCodeValue());
         assertNotNull(responseEntity.getBody());
@@ -72,7 +65,7 @@ class DonorControllerTest {
         donor.setCpf("44318783863");
         Mockito.when(donorRepository.save(donor)).thenReturn(new Donor());
 
-        ResponseEntity responseEntity = donorController.signIn(donorSignDTO);
+        ResponseEntity responseEntity = donorController.createDonor(donorSignDTO);
 
         assertEquals(201,responseEntity.getStatusCodeValue());
         assertNull(responseEntity.getBody());
@@ -89,7 +82,7 @@ class DonorControllerTest {
 
         Mockito.when(donorRepository.findByEmailAndPassword(donorDTO.getEmail(),donorDTO.getPassword())).thenReturn(null);
 
-        ResponseEntity responseEntity = donorController.loginWithReturn(donorDTO);
+        ResponseEntity responseEntity = donorController.loginDonor(donorDTO);
 
         assertEquals(404, responseEntity.getStatusCodeValue());
 //         assertNotNull(responseEntity.getBody());
@@ -112,7 +105,7 @@ class DonorControllerTest {
                 donorDTO.getEmail(),
                 donorDTO.getPassword())).thenReturn(donor);
 
-        ResponseEntity responseEntity = donorController.loginWithReturn(donorDTO);
+        ResponseEntity responseEntity = donorController.loginDonor(donorDTO);
 
         assertEquals(200,responseEntity.getStatusCodeValue());
 

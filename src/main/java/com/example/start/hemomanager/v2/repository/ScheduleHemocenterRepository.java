@@ -10,5 +10,6 @@ import java.util.List;
 
 @Repository
 public interface ScheduleHemocenterRepository extends JpaRepository<ScheduleHemocenter, Integer> {
+    ScheduleHemocenter findById(int id);
 
 }

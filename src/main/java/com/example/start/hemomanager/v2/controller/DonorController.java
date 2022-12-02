@@ -2,9 +2,9 @@ package com.example.start.hemomanager.v2.controller;
 
 import com.example.start.hemomanager.v2.domain.*;
 import com.example.start.hemomanager.v2.domain.Donor;
-import com.example.start.hemomanager.v2.dto.DonorSignInDTO;
-import com.example.start.hemomanager.v2.dto.InputValidation;
-import com.example.start.hemomanager.v2.dto.LoginDTO;
+import com.example.start.hemomanager.v2.domain.dto.DonorSignInDTO;
+import com.example.start.hemomanager.v2.domain.dto.InputValidation;
+import com.example.start.hemomanager.v2.domain.dto.LoginDTO;
 import com.example.start.hemomanager.v2.repository.DonorRepository;
 import com.example.start.hemomanager.v2.repository.HemocenterRepository;
 import com.example.start.hemomanager.v2.repository.ScheduleHemocenterRepository;
@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -31,10 +32,8 @@ public class DonorController {
     List<Donor> donors = new ArrayList<>();
 
     @PostMapping
-    public ResponseEntity signIn(@RequestBody DonorSignInDTO donorDTO) {
-        if (donorRepository.existsByEmailAndCpf(
-            donorDTO.getEmail(), donorDTO.getCpf())
-        ) return ResponseEntity.status(422).body("E-mail ou CNPJ já cadastrados.");
+    public ResponseEntity<Donor> createDonor(@RequestBody @Valid DonorSignInDTO donorDTO) {
+        if (donorRepository.existsByEmailAndCpf(donorDTO.getEmail(), donorDTO.getCpf())) throw new ResponseStatusException(HttpStatus.CONFLICT, "Email ou CPF já cadastrados.");
 
         Donor donor = new Donor();
         BeanUtils.copyProperties(donorDTO, donor);
@@ -44,61 +43,58 @@ public class DonorController {
     }
 
     @PostMapping("/current")
-    public ResponseEntity loginWithReturn(@RequestBody LoginDTO donorDTO) {
-        Donor donor = donorRepository.findByEmailAndPassword(
-            donorDTO.getEmail(), donorDTO.getPassword());
-        if (donor == null) return ResponseEntity.status(404).build();
+    public ResponseEntity<Donor> loginDonor(@RequestBody LoginDTO donorDTO) {
+        Donor donor = donorRepository.findByEmailAndPassword(donorDTO.getEmail(), donorDTO.getPassword());
+        if (donor == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado.");
 
         return ResponseEntity.status(200).body(donor);
     }
 
+    // método para os testes
     @PostMapping("/") @ResponseStatus(HttpStatus.CREATED)
-    public Donor insertDonor(@RequestBody @Valid Donor donor) {
+    public Donor insertDonor(@RequestBody Donor donor) {
         return donorRepository.save(donor);
     }
 
     @GetMapping
-    public Iterable<Donor> getAllDonors() {
-        return donorRepository.findAll();
+    public ResponseEntity<List<Donor>> getAllDonors() {
+        List<Donor> donorList = donorRepository.findAll();
+        if (donorList.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Nenhum usuário cadastrado.");
+        }
+        return ResponseEntity.status(200).body(donorList);
     }
 
     @GetMapping("/gender/male")
-    public Long qttyMaleDonors() {
-        return donorRepository.countBySexMale();
+    public ResponseEntity<Long> qttyMaleDonors() {
+        Long counter = donorRepository.countBySexMale();
+        if (counter == 0) throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Nenhum usuário do sexo informado foi encontrado.");
+
+        return ResponseEntity.status(200).body(counter);
     }
 
     @GetMapping("/gender/female")
-    public Long qttyFemaleDonors() {
-        return donorRepository.countBySexFemale();
-    }
+    public ResponseEntity<Long> qttyFemaleDonors() {
+        Long counter = donorRepository.countBySexFemale();
+        if (counter == 0) throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Nenhum usuário do sexo informado foi encontrado.");
 
-    @PostMapping("/schedule")
-    public Schedule insertSchedule(@RequestBody @Valid ScheduleRequest scheduleRequest){
-        Optional<ScheduleHemocenter> scheduleHemocenterOptional =  scheduleHemocenterRepository.findById(scheduleRequest.getScheduleHemocenterId());
-        Donor donorOptional = donorRepository.findById(scheduleRequest.getDonorId());
-        Optional<Hemocenter> hemocenterOptional = hemocenterRepository.findById(scheduleRequest.getHemocenterId());
-        Hemocenter hemocenter = hemocenterOptional.get();
-        ScheduleHemocenter scheduleHemocenter = scheduleHemocenterOptional.get();
-
-        Schedule schedule = new Schedule(donorOptional,hemocenter,scheduleHemocenter);
-        return scheduleRepository.save(schedule);
+        return ResponseEntity.status(200).body(counter);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Donor> updateDonor(@PathVariable int id, @RequestBody Donor donorDTO) {
-        if (donorRepository.existsById(id)) {
-            donorDTO.setId(id);
-            donorRepository.save(donorDTO);
-            return ResponseEntity.status(200).body(donorDTO);
-        }
-        return ResponseEntity.status(404).build();
+        if (!donorRepository.existsById(id)) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado.");
+
+        donorDTO.setId(id);
+        donorRepository.save(donorDTO);
+        return ResponseEntity.status(200).body(donorDTO);
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<Donor> findDonor(@PathVariable int id) {
-        if (donorRepository.existsById(id)) {
-            Donor donor = donorRepository.findById(id);
-            return ResponseEntity.status(200).body(donor);
-        }
-        return ResponseEntity.status(404).build();
+        if (!donorRepository.existsById(id)) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado.");
+
+        Donor donor = donorRepository.findById(id);
+        return ResponseEntity.status(200).body(donor);
     }
 }
