@@ -12,6 +12,7 @@ import com.example.start.hemomanager.v2.request.DonorFinderRequest;
 import com.example.start.hemomanager.v2.request.HemocenterFinderRequest;
 import com.example.start.hemomanager.v2.request.ScheduleHemocenterRequest;
 import com.example.start.hemomanager.v2.request.ScheduleRequest;
+import com.example.start.hemomanager.v2.response.ScheduleResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,7 +50,13 @@ public class ScheduleController {
         return ResponseEntity.status(200).body(schedule);
     }
 
+    @GetMapping("/hemocenter/all/{id}")
+    public ResponseEntity<List<ScheduleResponse>> getHoursByHemocenter(@PathVariable int id) {
+        if (hemocenterRepository.findById(id) == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Hemocentro não encontrado.");
+        List<ScheduleResponse> requestList = scheduleRepository.findSchedulesByHemocenterId(id);
 
+        return ResponseEntity.status(200).body(requestList);
+    }
 
     @PostMapping("/hour")
     public ResponseEntity<ScheduleHemocenter> insertDateHour(@RequestBody @Valid ScheduleHemocenterRequest scheduleRequest){
