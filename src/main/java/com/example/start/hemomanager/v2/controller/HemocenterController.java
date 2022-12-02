@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController @RequestMapping("/hemocenter")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class HemocenterController {
     @Autowired private HemocenterRepository hemocenterRepository;
     @Autowired private ScheduleHemocenterRepository scheduleHemocenterRepository;
@@ -68,6 +67,11 @@ public class HemocenterController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nenhum hemocentro encontrado.");
         if (hemocenter.getUuid() <= 0 || hemocenter.getUuid() > hemocenterRepository.count())
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Hemocentro inválido.");
+
+        if (scheduleHemocenterRequest.getScheduledDate() == null)
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Data inválida.");
+        if (scheduleHemocenterRequest.getScheduledTime() == null)
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Hora inválida.");
 
         ScheduleHemocenter scheduleHemocenter =
                 new ScheduleHemocenter(hemocenter,scheduleHemocenterRequest.getScheduledDate(),scheduleHemocenterRequest.getScheduledTime());

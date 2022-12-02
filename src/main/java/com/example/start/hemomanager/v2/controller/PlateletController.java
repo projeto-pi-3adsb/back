@@ -23,7 +23,6 @@ import java.nio.file.Files;
 
 @RestController
 @RequestMapping("/platelets")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class PlateletController {
 
     @Autowired
