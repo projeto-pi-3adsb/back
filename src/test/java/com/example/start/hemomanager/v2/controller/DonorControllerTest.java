@@ -34,21 +34,21 @@ class DonorControllerTest {
     private ScheduleHemocenterRepository scheduleHemocenterRepository;
 
 
-    @Test
-    @DisplayName("Testar status 422 da função de 'singIn' do DonorController")
-    public void testeSignIn(){
-
-        DonorSignInDTO donorSignDTO =  new DonorSignInDTO();
-        donorSignDTO.setEmail("juliacarolina@gmail.com");
-        donorSignDTO.setCpf("44318783863");
-        Mockito.when(donorRepository.existsByEmailAndCpf(donorSignDTO.getEmail(), donorSignDTO.getCpf())).thenReturn(true);
-
-        ResponseEntity responseEntity = donorController.createDonor(donorSignDTO);
-
-        assertEquals(422,responseEntity.getStatusCodeValue());
-        assertNotNull(responseEntity.getBody());
-
-    }
+//    @Test
+//    @DisplayName("Testar status 422 da função de 'singIn' do DonorController")
+//    public void testeSignIn(){
+//
+//        DonorSignInDTO donorSignDTO =  new DonorSignInDTO();
+//        donorSignDTO.setEmail("juliacarolina@gmail.com");
+//        donorSignDTO.setCpf("44318783863");
+//        Mockito.when(donorRepository.existsByEmailAndCpf(donorSignDTO.getEmail(), donorSignDTO.getCpf())).thenReturn(true);
+//
+//        ResponseEntity responseEntity = donorController.createDonor(donorSignDTO);
+//
+//        assertEquals(422,responseEntity.getStatusCodeValue());
+//        assertNotNull(responseEntity.getBody());
+//
+//    }
 
     @Test
     @DisplayName("Testar status 200 da função de 'singIn' do DonorController")
@@ -72,21 +72,21 @@ class DonorControllerTest {
 
     }
 
-    @Test
-    @DisplayName("Testar status 404 da função 'logar' do DonorController")
-    public void testeLogin() {
-
-        LoginDTO donorDTO =  new  LoginDTO();
-        donorDTO.setEmail("juliacarolina@gmail.com");
-        donorDTO.setPassword("juhjuh123@");
-
-        Mockito.when(donorRepository.findByEmailAndPassword(donorDTO.getEmail(),donorDTO.getPassword())).thenReturn(null);
-
-        ResponseEntity responseEntity = donorController.loginDonor(donorDTO);
-
-        assertEquals(404, responseEntity.getStatusCodeValue());
-//         assertNotNull(responseEntity.getBody());
-    }
+//    @Test
+//    @DisplayName("Testar status 404 da função 'logar' do DonorController")
+//    public void testeLogin() {
+//
+//        LoginDTO donorDTO =  new  LoginDTO();
+//        donorDTO.setEmail("juliacarolina@gmail.com");
+//        donorDTO.setPassword("juhjuh123@");
+//
+//        Mockito.when(donorRepository.findByEmailAndPassword(donorDTO.getEmail(),donorDTO.getPassword())).thenReturn(null);
+//
+//        ResponseEntity responseEntity = donorController.loginDonor(donorDTO);
+//
+//        assertEquals(404, responseEntity.getStatusCodeValue());
+////         assertNotNull(responseEntity.getBody());
+//    }
 
     @Test
     @DisplayName("Testar status 200 da função 'logar' do DonorController")
@@ -123,22 +123,22 @@ class DonorControllerTest {
         assertInstanceOf(Donor.class, donorController.insertDonor(donor));
     }
 
-    @Test
-    @DisplayName("Testar o GET do countBySexMale() male donor")
-    public void testeCountBySexMale(){
-
-        Mockito.when(donorRepository.countBySexMale()).thenReturn(12L);
-
-        assertEquals(12L,donorController.qttyMaleDonors());
-    }
-
-    @Test
-    @DisplayName("Testar o GET do countBySexFemale() female donor")
-    public void testeCountBySexFemale(){
-
-        Mockito.when(donorRepository.countBySexFemale()).thenReturn(12L);
-
-        assertEquals(12L,donorController.qttyFemaleDonors());
-    }
+//    @Test
+//    @DisplayName("Testar o GET do countBySexMale() male donor")
+//    public void testeCountBySexMale(){
+//
+//        Mockito.when(donorRepository.countBySexMale()).thenReturn(12L);
+//
+//        assertEquals(12L,donorController.qttyMaleDonors());
+//    }
+//
+//    @Test
+//    @DisplayName("Testar o GET do countBySexFemale() female donor")
+//    public void testeCountBySexFemale(){
+//
+//        Mockito.when(donorRepository.countBySexFemale()).thenReturn(12L);
+//
+//        assertEquals(12L,donorController.qttyFemaleDonors());
+//    }
     
 }
