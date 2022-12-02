@@ -44,13 +44,8 @@ public class ScheduleController {
         return ResponseEntity.status(200).body(schedule);
     }
 
-    @GetMapping("/hemocenter")
-    public ResponseEntity<Schedule> findByHemocenterId(@RequestBody HemocenterFinderRequest hemocenterFinderRequest) {
-        int id = hemocenterFinderRequest.getId();
-
-        if (hemocenterRepository.findById(id) == null) {
-            return ResponseEntity.status(404).build();
-        }
+    @GetMapping("/hemocenter/{id}")
+    public ResponseEntity<Schedule> findByHemocenterId(@PathVariable int id) {
         Schedule schedule = scheduleRepository.findByHemocenterId(id);
         Schedule scheduleHemocenter = scheduleRepository.save(schedule);
         return ResponseEntity.status(200).body(schedule);
