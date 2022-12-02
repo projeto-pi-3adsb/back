@@ -24,6 +24,10 @@ public class StockFullResponse {
     public StockFullResponse() {
     }
 
+    public Integer getId() {
+        return id;
+    }
+
     public String getBloodType() {
         return bloodType;
     }
