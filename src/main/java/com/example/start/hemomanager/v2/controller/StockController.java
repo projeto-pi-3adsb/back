@@ -1,9 +1,10 @@
 package com.example.start.hemomanager.v2.controller;
 
+import com.example.start.hemomanager.v2.domain.Donor;
 import com.example.start.hemomanager.v2.domain.Hemocenter;
 import com.example.start.hemomanager.v2.domain.Stock;
-import com.example.start.hemomanager.v2.dto.InputValidation;
-import com.example.start.hemomanager.v2.dto.StockDTO;
+import com.example.start.hemomanager.v2.domain.dto.InputValidation;
+import com.example.start.hemomanager.v2.domain.dto.StockDTO;
 import com.example.start.hemomanager.v2.repository.HemocenterRepository;
 import com.example.start.hemomanager.v2.repository.StockRepository;
 import com.example.start.hemomanager.v2.response.StockFullResponse;
@@ -16,7 +17,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -33,36 +33,41 @@ public class StockController {
     List<Stock> bags = new ArrayList<>();
 
     @PostMapping("/{hemocenter}")
-    public ResponseEntity insertBag(@PathVariable Integer hemocenter, @RequestBody StockDTO stockDTO) {
+    public ResponseEntity<Stock> insertBag(@PathVariable Integer hemocenter, @RequestBody StockDTO stockDTO) {
         String bloodType = stockDTO.getBloodType();
         LocalDate collectionDate = stockDTO.getCollectionDate();
 
-        if (!hemocenterRepository.existsById(hemocenter)) {
-            return ResponseEntity.status(404).body("Hemocentro não encontrado.");
-        }
+        if (!hemocenterRepository.existsById(hemocenter)) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Hemocentro não encontrado.");
 
         Stock stock = new Stock();
-
         Hemocenter hemocenterToSave = new Hemocenter();
-        hemocenterToSave.setUuid(hemocenter);
 
+        hemocenterToSave.setUuid(hemocenter);
         stock.setHemocenter(hemocenterToSave);
         stock.setBloodType(bloodType);
         stock.setCollectionDate(collectionDate);
-        Stock saved = stockRepository.save(stock);
 
+        Stock saved = stockRepository.save(stock);
         BeanUtils.copyProperties(stockDTO, stock);
+
         return ResponseEntity.status(200).body(saved);
     }
 
     @GetMapping
-    public List<Stock> getAllBags() {
-        return stockRepository.findAll();
+    public ResponseEntity<List<Stock>> getAllBags() {
+        List<Stock> stockList = stockRepository.findAll();
+        if (stockList.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Erro na busca do estoque.");
+        }
+        return ResponseEntity.status(200).body(stockList);
     }
 
     @GetMapping("/type/{bloodType}")
-    public long getTypeAPosBags(@PathVariable String bloodType) {
-        return stockRepository.countByType(bloodType);
+    public ResponseEntity<Long> getTypeAPosBags(@PathVariable String bloodType) {
+        long counter = stockRepository.countByType(bloodType);
+        if (counter == 0) throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Nenhuma bolsa foi encontrada.");
+
+        return ResponseEntity.status(200).body(counter);
     }
 
     @GetMapping("/bloodType/{hemocenter}")
@@ -117,11 +122,12 @@ public class StockController {
 
         return saida;
     }
-    @DeleteMapping("/{bagId}")
-    public void deleteBag(@PathVariable Integer bagId) {
-        if (!stockRepository.existsById(bagId)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Bag not found");
-        }
+    @DeleteMapping("/{hemocenterId}/{bagId}")
+    public ResponseEntity<String> deleteBag(@PathVariable int hemocenterId, @PathVariable Integer bagId) {
+        if (!hemocenterRepository.existsById(hemocenterId)) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Hemocentro não encontrado.");
+        if (!stockRepository.existsById(bagId)) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Bolsa não encontrada.");
+
         stockRepository.deleteById(bagId);
+        return ResponseEntity.status(200).body("Sucesso na exclusão da bolsa.");
     }
 }
