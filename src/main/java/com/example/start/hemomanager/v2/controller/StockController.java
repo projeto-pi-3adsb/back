@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.*;
+import java.time.LocalDate;
 import java.util.*;
 
 @RestController @RequestMapping("/stock")
@@ -32,8 +33,9 @@ public class StockController {
     List<Stock> bags = new ArrayList<>();
 
     @PostMapping("/{hemocenter}")
-    public ResponseEntity insertBag(@Nullable Integer hemocenter, StockDTO stockDTO) {
+    public ResponseEntity insertBag(@PathVariable Integer hemocenter, @RequestBody StockDTO stockDTO) {
         String bloodType = stockDTO.getBloodType();
+        LocalDate collectionDate = stockDTO.getCollectionDate();
 
         if (!hemocenterRepository.existsById(hemocenter)) {
             return ResponseEntity.status(404).body("Hemocentro não encontrado.");
@@ -46,7 +48,7 @@ public class StockController {
 
         stock.setHemocenter(hemocenterToSave);
         stock.setBloodType(bloodType);
-        stock.setCollectionDate(stockDTO.getCollectionDate());
+        stock.setCollectionDate(collectionDate);
         Stock saved = stockRepository.save(stock);
 
         BeanUtils.copyProperties(stockDTO, stock);
