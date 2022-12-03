@@ -1,6 +1,6 @@
-Nome completo
-Email
-CPF
-Data de nascimento
-Gênero
-Telefone
+Nome completo: Cindy Kanashiro
+CPF: 237.743.608-04
+Email: cindy.kanashiro@gmail.com
+Data de nascimento: 2002-12-26
+Telefone: 11912345678
+Gênero: Feminino
