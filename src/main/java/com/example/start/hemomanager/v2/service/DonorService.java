@@ -2,18 +2,15 @@ package com.example.start.hemomanager.v2.service;
 
 import com.example.start.hemomanager.v2.domain.Donor;
 import com.example.start.hemomanager.v2.domain.dto.DonorSignInDTO;
-import com.example.start.hemomanager.v2.domain.dto.InputValidation;
 import com.example.start.hemomanager.v2.domain.dto.LoginDTO;
 import com.example.start.hemomanager.v2.repository.DonorRepository;
-import com.example.start.hemomanager.v2.repository.HemocenterRepository;
-import com.example.start.hemomanager.v2.repository.ScheduleHemocenterRepository;
-import com.example.start.hemomanager.v2.repository.ScheduleRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
@@ -26,17 +23,6 @@ public class DonorService {
 
     @Autowired
     DonorRepository donorRepository;
-
-    @Autowired
-    ScheduleHemocenterRepository scheduleHemocenterRepository;
-
-    @Autowired
-    ScheduleRepository scheduleRepository;
-
-    @Autowired
-    HemocenterRepository hemocenterRepository;
-
-    InputValidation validation;
 
     @Transactional
     public ResponseEntity<Donor> createDonor(@RequestBody @Valid DonorSignInDTO donorDTO) {

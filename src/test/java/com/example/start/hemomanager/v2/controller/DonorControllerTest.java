@@ -112,16 +112,16 @@ class DonorControllerTest {
 
     }
 
-    @Test
-    @DisplayName("Testar o POST do .save Donor")
-    public void testePostSave(){
-
-        Donor donor = new Donor();
-
-        Mockito.when(donorRepository.save(donor)).thenReturn(donor);
-
-        assertInstanceOf(Donor.class, donorController.insertDonor(donor));
-    }
+//    @Test
+//    @DisplayName("Testar o POST do .save Donor")
+//    public void testePostSave(){
+//
+//        Donor donor = new Donor();
+//
+//        Mockito.when(donorRepository.save(donor)).thenReturn(donor);
+//
+//        assertInstanceOf(Donor.class, donorController.insertDonor(donor));
+//    }
 
 //    @Test
 //    @DisplayName("Testar o GET do countBySexMale() male donor")

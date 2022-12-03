@@ -1,7 +1,144 @@
 package com.example.start.hemomanager.v2.service;
 
+import com.example.start.hemomanager.v2.domain.Hemocenter;
+import com.example.start.hemomanager.v2.domain.Stock;
+import com.example.start.hemomanager.v2.domain.dto.StockDTO;
+import com.example.start.hemomanager.v2.repository.HemocenterRepository;
+import com.example.start.hemomanager.v2.repository.StockRepository;
+import com.example.start.hemomanager.v2.response.StockFullResponse;
+import com.example.start.hemomanager.v2.response.StockSimpleResponse;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+
+import javax.transaction.Transactional;
+import java.io.*;
+import java.time.LocalDate;
+import java.util.Formatter;
+import java.util.FormatterClosedException;
+import java.util.List;
 
 @Service
 public class StockService {
+
+    @Autowired
+    StockRepository stockRepository;
+    @Autowired
+    HemocenterRepository hemocenterRepository;
+
+    @Transactional
+    public ResponseEntity<Stock> insertBag(@PathVariable Integer hemocenter, @RequestBody StockDTO stockDTO) {
+        String bloodType = stockDTO.getBloodType();
+        LocalDate collectionDate = stockDTO.getCollectionDate();
+
+        if (!hemocenterRepository.existsById(hemocenter)) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Hemocentro não encontrado.");
+
+        Stock stock = new Stock();
+        Hemocenter hemocenterToSave = new Hemocenter();
+
+        hemocenterToSave.setUuid(hemocenter);
+        stock.setHemocenter(hemocenterToSave);
+        stock.setBloodType(bloodType);
+        stock.setCollectionDate(collectionDate);
+
+        Stock saved = stockRepository.save(stock);
+        BeanUtils.copyProperties(stockDTO, stock);
+
+        return ResponseEntity.status(200).body(saved);
+    }
+
+    @Transactional
+    public ResponseEntity<List<Stock>> getAllBags() {
+        List<Stock> stockList = stockRepository.findAll();
+        if (stockList.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Erro na busca do estoque.");
+        }
+        return ResponseEntity.status(200).body(stockList);
+    }
+
+    @Transactional
+    public ResponseEntity<Long> getTypeAPosBags(@PathVariable String bloodType) {
+        long counter = stockRepository.countByType(bloodType);
+        if (counter == 0) throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Nenhuma bolsa foi encontrada.");
+
+        return ResponseEntity.status(200).body(counter);
+    }
+
+    @Transactional
+    public ResponseEntity<List<StockSimpleResponse>> groupBy(@PathVariable Integer hemocenter) {
+        if (!hemocenterRepository.existsById(hemocenter)) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nenhuma bolsa foi encontrada.");
+        List<StockSimpleResponse> stockList = stockRepository.groupByBloodType(hemocenter);
+
+        return ResponseEntity.status(200).body(stockList);
+    }
+
+    @Transactional
+    public ResponseEntity<List<StockFullResponse>> getAllFromStockHemocenter(@PathVariable Integer hemocenter) {
+        if (!hemocenterRepository.existsById(hemocenter)) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nenhuma bolsa foi encontrada.");
+        List<StockFullResponse> stockList = stockRepository.findByHemocenter(hemocenter);
+
+        return ResponseEntity.status(200).body(stockList);
+    }
+
+    @Transactional
+    public ResponseEntity<Resource> downloadCSV(@PathVariable Integer hemocenter) throws FileNotFoundException {
+        List<StockFullResponse> stockList = stockRepository.findByHemocenter(hemocenter);
+        String nomeArq = "stock.csv";
+
+        try {
+            FileWriter arq = new FileWriter(nomeArq);
+            Formatter saida = this.formaterCsvByRe(stockList, new Formatter(arq));
+            saida.close();
+            arq.close();
+        } catch (IOException erro) {
+            System.out.println("Erro ao abrir o aquivo");
+            System.exit(1);
+        } catch (FormatterClosedException erro) {
+            System.out.println("Erro ao gravar o aquivo");
+        }
+
+        File initialFile = new File(nomeArq);
+        InputStream targetStream = new FileInputStream(initialFile);
+
+        InputStreamResource file = new InputStreamResource(targetStream);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + nomeArq)
+                .contentType(MediaType.parseMediaType("application/csv"))
+                .body(file);
+    }
+
+    public Formatter formaterCsvByRe(List<StockFullResponse> stockList, Formatter saida) {
+        if (stockList.size() > 1) {
+            formaterCsvByRe(stockList.subList(0, stockList.size()-1), saida);
+        }
+
+        StockFullResponse stock = stockList.get(stockList.size()-1);
+        saida.format("%s;%s;%s;%s;\n",
+                stock.getBloodType(),
+                stock.getCollectionDate(),
+                stock.getInsertDate()
+        );
+
+        return saida;
+
+    }
+
+    @Transactional
+    public ResponseEntity<String> deleteBag(@PathVariable int hemocenterId, @PathVariable Integer bagId) {
+        if (!hemocenterRepository.existsById(hemocenterId)) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Hemocentro não encontrado.");
+        if (!stockRepository.existsById(bagId)) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Bolsa não encontrada.");
+
+        stockRepository.deleteById(bagId);
+        return ResponseEntity.status(200).body("Sucesso na exclusão da bolsa.");
+    }
+
 }
