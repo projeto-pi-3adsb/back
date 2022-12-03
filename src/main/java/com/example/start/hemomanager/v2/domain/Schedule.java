@@ -1,12 +1,7 @@
 package com.example.start.hemomanager.v2.domain;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.List;
+import java.util.Optional;
 
 @Entity
 public class Schedule {
@@ -21,7 +16,10 @@ public class Schedule {
     private ScheduleHemocenter scheduleHemocenter;
 
 
-    public Schedule() {}
+    public Schedule() {
+    }
+
+    public Schedule(Optional<Donor> donor, Hemocenter hemocenter, ScheduleHemocenter scheduleHemocenter) {}
 
     public Schedule(Donor scheduledDonor, Hemocenter hemocenter, ScheduleHemocenter scheduleHemocenter) {
         this.scheduledDonor = scheduledDonor;

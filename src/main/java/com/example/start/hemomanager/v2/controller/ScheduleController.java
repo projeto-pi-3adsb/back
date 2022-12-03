@@ -43,8 +43,8 @@ public class ScheduleController {
     }
 
     @GetMapping("/donor/{id}")
-    public ResponseEntity<List<Schedule>> findDonorById(@PathVariable int id) {
-        if (donorRepository.findById(id) == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Doador inválido ou inexistente.");
+    public ResponseEntity<List<Schedule>> findDonorById(@PathVariable Long id) {
+        if (donorRepository.findById(id).isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Doador inválido ou inexistente.");
 
         List<Schedule> schedule = scheduleRepository.findByDonorId(id);
         return ResponseEntity.status(200).body(schedule);
@@ -76,7 +76,7 @@ public class ScheduleController {
     @PostMapping
     public ResponseEntity<Schedule> insertSchedule(@RequestBody ScheduleRequest scheduleRequest){
         int scheduledHemocenter = scheduleRequest.getHemocenterId();
-        int scheduledDonor = scheduleRequest.getDonorId();
+        Long scheduledDonor = scheduleRequest.getDonorId();
         int scheduledRequest = scheduleRequest.getScheduleHemocenterId();
 
         if (scheduledHemocenter <= 0 || scheduledHemocenter > hemocenterRepository.count())
@@ -90,7 +90,7 @@ public class ScheduleController {
 
         ScheduleHemocenter scheduleHemocenter = scheduleHemocenterRepository.findById(scheduledRequest);
         Hemocenter hemocenter = hemocenterRepository.findById(scheduledHemocenter);
-        Donor donor = donorRepository.findById(scheduledDonor);
+        Optional<Donor> donor = donorRepository.findById(scheduledDonor);
 
         Schedule schedule = new Schedule(donor, hemocenter, scheduleHemocenter);
         scheduleRepository.save(schedule);

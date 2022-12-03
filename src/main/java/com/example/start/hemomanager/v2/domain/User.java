@@ -1,5 +1,6 @@
 package com.example.start.hemomanager.v2.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.br.CNPJ;
 import org.hibernate.validator.constraints.br.CPF;
@@ -19,6 +20,7 @@ public abstract class User {
     private String email;
 
     @NotBlank
+    @JsonIgnore
     private String password;
 
     public User(

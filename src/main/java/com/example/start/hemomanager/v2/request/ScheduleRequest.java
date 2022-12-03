@@ -6,7 +6,7 @@ import java.time.LocalTime;
 public class ScheduleRequest {
 
     private int hemocenterId;
-    private int donorId;
+    private Long donorId;
     private int scheduleHemocenterId;
 
     public int getHemocenterId() {
@@ -17,11 +17,11 @@ public class ScheduleRequest {
         this.hemocenterId = hemocenterId;
     }
 
-    public int getDonorId() {
+    public Long getDonorId() {
         return donorId;
     }
 
-    public void setDonorId(int donorId) {
+    public void setDonorId(Long donorId) {
         this.donorId = donorId;
     }
 

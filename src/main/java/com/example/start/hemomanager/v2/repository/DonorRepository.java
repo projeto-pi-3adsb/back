@@ -7,10 +7,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface DonorRepository extends JpaRepository<Donor, Integer> {
+public interface DonorRepository extends JpaRepository<Donor, Long> {
     Donor findByEmailAndPassword(String email, String password);
-
-    Donor findById(int id);
 
     boolean existsByEmailAndCpf(String email, String cpf);
 

@@ -31,7 +31,7 @@ public class PlateletController {
     private final Path root = Paths.get("uploads");
 
     @GetMapping("/dowload-csv")
-    public ResponseEntity<Resource> dowloadsCsv(Integer donorId) throws FileNotFoundException {
+    public ResponseEntity<Resource> dowloadsCsv(Long donorId) throws FileNotFoundException {
         FileWriter arq = null;
         Formatter saida = null;
         Boolean deuRuim = false;
@@ -81,7 +81,7 @@ public class PlateletController {
     }
 
     @GetMapping("/dowload-txt")
-    public ResponseEntity<Resource> dowloadsTxt(Integer donorId) throws FileNotFoundException {
+    public ResponseEntity<Resource> dowloadsTxt(Long donorId) throws FileNotFoundException {
         FileWriter arq = null;
         Formatter saida = null;
         Boolean deuRuim = false;

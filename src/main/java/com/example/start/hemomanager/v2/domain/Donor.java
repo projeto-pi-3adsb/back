@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @Entity
 public class Donor extends User {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @NotBlank @CPF(message = "cpf inválido")
     private String cpf;
@@ -49,7 +49,7 @@ public class Donor extends User {
         this.validDonor = validDonor;
     }
 
-    public Donor(String name, String email, Integer id, String cpf, LocalDate birthDate, String sex, String phone, boolean validDonor) {
+    public Donor(String name, String email, Long id, String cpf, LocalDate birthDate, String sex, String phone, boolean validDonor) {
         this.id = id;
         this.cpf = cpf;
         this.birthDate = birthDate;
@@ -58,11 +58,11 @@ public class Donor extends User {
         this.validDonor = validDonor;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
