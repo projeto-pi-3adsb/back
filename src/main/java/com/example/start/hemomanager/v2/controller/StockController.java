@@ -127,6 +127,7 @@ public class StockController {
 
         return saida;
     }
+
     @DeleteMapping("/{hemocenterId}/{bagId}")
     public ResponseEntity<String> deleteBag(@PathVariable int hemocenterId, @PathVariable Integer bagId) {
         if (!hemocenterRepository.existsById(hemocenterId)) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Hemocentro não encontrado.");
