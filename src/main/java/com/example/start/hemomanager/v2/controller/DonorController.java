@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController @RequestMapping("/donor")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class DonorController {
     @Autowired private DonorRepository donorRepository;
     @Autowired private ScheduleHemocenterRepository scheduleHemocenterRepository;

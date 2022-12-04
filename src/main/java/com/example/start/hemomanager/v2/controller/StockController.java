@@ -25,6 +25,7 @@ import java.time.LocalDate;
 import java.util.*;
 
 @RestController @RequestMapping("/stock")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class StockController {
     @Autowired private StockRepository stockRepository;
     @Autowired private HemocenterRepository hemocenterRepository;

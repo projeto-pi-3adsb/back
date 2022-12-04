@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController @RequestMapping("/hemocenter")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class HemocenterController {
     @Autowired private HemocenterRepository hemocenterRepository;
     @Autowired private ScheduleHemocenterRepository scheduleHemocenterRepository;
