@@ -1,13 +1,9 @@
 package com.example.start.hemomanager.v2.domain.dto;
 
-import com.example.start.hemomanager.v2.domain.Hemocenter;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.time.LocalTime;
-import java.util.List;
 
-public class HemocenterSignInDTO {
+public class HemocenterDTO {
+    private int uuid;
     private String name;
     private String email;
     private String password;
@@ -18,10 +14,10 @@ public class HemocenterSignInDTO {
     private LocalTime endOperation;
     private int qttySimultServices;
 
-    public HemocenterSignInDTO() {
+    public HemocenterDTO() {
     }
 
-    public HemocenterSignInDTO(
+    public HemocenterDTO(
         String name,
         String email,
         String password,
@@ -41,6 +37,14 @@ public class HemocenterSignInDTO {
         this.startOperation = startOperation;
         this.endOperation = endOperation;
         this.qttySimultServices = qttySimultServices;
+    }
+
+    public int getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(int uuid) {
+        this.uuid = uuid;
     }
 
     public String getName() {

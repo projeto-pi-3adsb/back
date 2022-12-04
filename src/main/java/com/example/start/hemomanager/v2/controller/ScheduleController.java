@@ -64,7 +64,7 @@ public class ScheduleController {
         int id = scheduleRequest.getHemocenterId();
         LocalDate scheduledDate = scheduleRequest.getScheduledDate();
         LocalTime scheduledTime = scheduleRequest.getScheduledTime();
-        Hemocenter hemocenter = hemocenterRepository.findById(id);
+        Hemocenter hemocenter = hemocenterRepository.findByUuid(id);
 
         if (hemocenter == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Hemocentro inválido ou inexistente.");
 
@@ -90,7 +90,7 @@ public class ScheduleController {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Agendamento inválido.");
 
         ScheduleHemocenter scheduleHemocenter = scheduleHemocenterRepository.findById(scheduledRequest);
-        Hemocenter hemocenter = hemocenterRepository.findById(scheduledHemocenter);
+        Hemocenter hemocenter = hemocenterRepository.findByUuid(scheduledHemocenter);
         Donor donor = donorRepository.findById(scheduledDonor);
 
         Schedule schedule = new Schedule(donor, hemocenter, scheduleHemocenter);

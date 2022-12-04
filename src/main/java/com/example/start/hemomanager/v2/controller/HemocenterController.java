@@ -1,8 +1,9 @@
 package com.example.start.hemomanager.v2.controller;
 
+import com.example.start.hemomanager.v2.domain.Donor;
 import com.example.start.hemomanager.v2.domain.Hemocenter;
 import com.example.start.hemomanager.v2.domain.ScheduleHemocenter;
-import com.example.start.hemomanager.v2.domain.dto.HemocenterSignInDTO;
+import com.example.start.hemomanager.v2.domain.dto.HemocenterDTO;
 import com.example.start.hemomanager.v2.domain.dto.LoginDTO;
 import com.example.start.hemomanager.v2.repository.HemocenterRepository;
 import com.example.start.hemomanager.v2.repository.ScheduleHemocenterRepository;
@@ -16,7 +17,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @RestController @RequestMapping("/hemocenter")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -25,7 +25,7 @@ public class HemocenterController {
     @Autowired private ScheduleHemocenterRepository scheduleHemocenterRepository;
 
     @PostMapping
-    public ResponseEntity<Hemocenter> createHemocenter(@RequestBody HemocenterSignInDTO hemocenterDTO) {
+    public ResponseEntity<Hemocenter> createHemocenter(@RequestBody HemocenterDTO hemocenterDTO) {
         if (hemocenterRepository.existsByEmailAndCnpj(hemocenterDTO.getEmail(), hemocenterDTO.getCnpj())) throw new ResponseStatusException(HttpStatus.CONFLICT, "Email ou CPF já cadastrados.");
 
         Hemocenter hemocenter = new Hemocenter();
@@ -43,11 +43,12 @@ public class HemocenterController {
         return ResponseEntity.status(200).body(hemocenter);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Hemocenter> updateHemocenter(@PathVariable int id, @RequestBody Hemocenter hemocenterDTO) {
-        if (hemocenterRepository.existsById(id)) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado.");
+    @PutMapping("/{uuid}")
+    public ResponseEntity<Hemocenter> updateHemocenter(@PathVariable int uuid, @RequestBody Hemocenter hemocenterDTO) {
+        if (!hemocenterRepository.existsById(uuid)) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado.");
 
-        hemocenterDTO.setUuid(id);
+        hemocenterDTO.setUuid(uuid);
+        Hemocenter hemocenter = hemocenterDTO;
         hemocenterRepository.save(hemocenterDTO);
         return ResponseEntity.status(200).body(hemocenterDTO);
     }
@@ -62,7 +63,7 @@ public class HemocenterController {
 
     @PostMapping("/scheduleHemocenter")
     public ResponseEntity<ScheduleHemocenter> insertScheduleTime (@RequestBody @Valid ScheduleHemocenterRequest scheduleHemocenterRequest){
-        Hemocenter hemocenter = hemocenterRepository.findById(scheduleHemocenterRequest.getHemocenterId());
+        Hemocenter hemocenter = hemocenterRepository.findByUuid(scheduleHemocenterRequest.getHemocenterId());
 
         if (hemocenter == null)
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nenhum hemocentro encontrado.");

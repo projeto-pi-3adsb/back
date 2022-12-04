@@ -1,7 +1,7 @@
 package com.example.start.hemomanager.v2.controller;
 
 import com.example.start.hemomanager.v2.domain.Hemocenter;
-import com.example.start.hemomanager.v2.domain.dto.HemocenterSignInDTO;
+import com.example.start.hemomanager.v2.domain.dto.HemocenterDTO;
 import com.example.start.hemomanager.v2.domain.dto.LoginDTO;
 import com.example.start.hemomanager.v2.repository.HemocenterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ class HemocenterControllerTest {
 //    @DisplayName("Testar status 422 da função de 'singIn' do HemocenterController")
 //    public void testeSignIn(){
 //
-//        HemocenterSignInDTO hemocenterSignInDTO =  new HemocenterSignInDTO();
+//        HemocenterDTO hemocenterSignInDTO =  new HemocenterDTO();
 //
 //
 //        hemocenterSignInDTO.setEmail("juliacarolina@gmail.com");
@@ -51,7 +51,7 @@ class HemocenterControllerTest {
     @DisplayName("Testar status 200 da função de 'singIn' do HemocenterController")
     public void segundoTesteSignIn(){
 
-        HemocenterSignInDTO hemocenterSignInDTO =  new HemocenterSignInDTO();
+        HemocenterDTO hemocenterSignInDTO =  new HemocenterDTO();
 
         hemocenterSignInDTO.setEmail("carolina@gmail.com");
         hemocenterSignInDTO.setCnpj("44318783863");
@@ -138,7 +138,7 @@ class HemocenterControllerTest {
     @DisplayName("Testar o POST do .save Hemocenter")
     public void testePostSave(){
 
-        HemocenterSignInDTO dto = new HemocenterSignInDTO();
+        HemocenterDTO dto = new HemocenterDTO();
         dto.setEmail("juliacarolina@gmail.com");
         dto.setPassword("juhjuh123@");
 
