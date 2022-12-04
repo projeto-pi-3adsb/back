@@ -21,4 +21,6 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Integer> {
     @Query("SELECT new com.example.start.hemomanager.v2.response.ScheduleResponse(hm.uuid, sch.uuid, hm.name, sch.scheduledTime, sch.scheduledDate) " +
             "FROM ScheduleHemocenter sch INNER JOIN sch.hemocenter hm where hm.uuid =:id")
     List<ScheduleResponse> findSchedulesByHemocenterId(@Param("id") int id);
+
+    void deleteByUuid(Integer uuid);
 }

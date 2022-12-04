@@ -1,6 +1,6 @@
 package com.example.start.hemomanager.v2.controller;
 import com.example.start.hemomanager.v2.domain.Donor;
-import com.example.start.hemomanager.v2.domain.dto.DonorSignInDTO;
+import com.example.start.hemomanager.v2.domain.dto.DonorDTO;
 import com.example.start.hemomanager.v2.domain.dto.LoginDTO;
 import com.example.start.hemomanager.v2.repository.DonorRepository;
 import com.example.start.hemomanager.v2.repository.HemocenterRepository;
@@ -38,7 +38,7 @@ class DonorControllerTest {
 //    @DisplayName("Testar status 422 da função de 'singIn' do DonorController")
 //    public void testeSignIn(){
 //
-//        DonorSignInDTO donorSignDTO =  new DonorSignInDTO();
+//        DonorDTO donorSignDTO =  new DonorDTO();
 //        donorSignDTO.setEmail("juliacarolina@gmail.com");
 //        donorSignDTO.setCpf("44318783863");
 //        Mockito.when(donorRepository.existsByEmailAndCpf(donorSignDTO.getEmail(), donorSignDTO.getCpf())).thenReturn(true);
@@ -54,7 +54,7 @@ class DonorControllerTest {
     @DisplayName("Testar status 200 da função de 'singIn' do DonorController")
     public void segundoTesteSignIn(){
 
-        DonorSignInDTO donorSignDTO =  new DonorSignInDTO();
+        DonorDTO donorSignDTO =  new DonorDTO();
         donorSignDTO.setEmail("juliacarolina@gmail.com");
         donorSignDTO.setCpf("44318783863");
 

@@ -1,10 +1,8 @@
 package com.example.start.hemomanager.v2.domain.dto;
 
-import com.example.start.hemomanager.v2.domain.Donor;
-
 import java.time.LocalDate;
 
-public class DonorSignInDTO {
+public class DonorDTO {
     private String name;
     private String email;
     private String password;
@@ -14,10 +12,10 @@ public class DonorSignInDTO {
     private String phone;
     private boolean validDonor;
 
-    public DonorSignInDTO() {
+    public DonorDTO() {
     }
 
-    public DonorSignInDTO(
+    public DonorDTO(
             String name,
             String email,
             String password,

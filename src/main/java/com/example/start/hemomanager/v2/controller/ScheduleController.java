@@ -115,11 +115,20 @@ public class ScheduleController {
     }
 
     @DeleteMapping("/hour/{hemocenterId}/{id}")
-    public ResponseEntity deleteSchedule(@PathVariable int hemocenterId, @PathVariable int id) {
+    public ResponseEntity deleteScheduleHour(@PathVariable int hemocenterId, @PathVariable int id) {
         if (!hemocenterRepository.existsById(hemocenterId)) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Hemocentro não encontrado.");
         if (!scheduleHemocenterRepository.existsById(id)) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Horário inválido.");
 
         scheduleHemocenterRepository.deleteById(id);
-        return ResponseEntity.status(200).body("Sucesso na exclusão da bolsa.");
+        return ResponseEntity.status(200).body("Sucesso na exclusão do horário.");
+    }
+
+    @DeleteMapping("/drop/{donorId}/{scheduleId}")
+    public ResponseEntity deleteSchedule(@PathVariable int donorId, @PathVariable Integer scheduleId) {
+        if (!donorRepository.existsById(donorId)) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Doador não encontrado.");
+        if (!scheduleRepository.existsById(scheduleId)) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Horário inválido.");
+
+        scheduleRepository.deleteByUuid(scheduleId);
+        return ResponseEntity.status(200).body("Sucesso na exclusão do agendamento.");
     }
 }
