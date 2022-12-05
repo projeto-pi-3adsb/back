@@ -129,7 +129,7 @@ public class ScheduleController {
         if (!donorRepository.existsById(donorId)) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Doador não encontrado.");
         if (!scheduleRepository.existsById(scheduleId)) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Horário inválido.");
 
-        scheduleRepository.deleteByUuid(scheduleId);
+        scheduleRepository.deleteById(scheduleId);
         return ResponseEntity.status(200).body("Sucesso na exclusão do agendamento.");
     }
 }
