@@ -102,7 +102,7 @@ public class ScheduleController {
     @GetMapping("/{id}")
     public ResponseEntity<ScheduleHemocenter> findScheduleHemocenter(@PathVariable int id) {
         ScheduleHemocenter hemocenter = scheduleHemocenterRepository.findById(id);
-        if (hemocenter == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Hemocentro inválido ou inexistente.");
+        if (hemocenter == null) throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Hemocentro inválido ou inexistente.");
 
         return ResponseEntity.status(200).body(hemocenter);
     }
