@@ -106,7 +106,8 @@ public class ScheduleController {
 
     @GetMapping("/hemocenter/{id}")
     public ResponseEntity<List<Schedule>> findByHemocenterId(@PathVariable int id) {
-        System.out.println("ID RECEBIDO" + id);
+
+        System.out.println("ID RECEBIDO >>  " + id);
         List<Schedule> scheduleList = scheduleRepository.findAllByHemocenter_Uuid(id);
         System.out.println("LISTA" + scheduleList);
         if (scheduleList.isEmpty()) throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Não foram encontrados agendamentos.");

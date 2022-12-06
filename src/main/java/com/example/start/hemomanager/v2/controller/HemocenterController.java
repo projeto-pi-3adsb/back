@@ -16,6 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController @RequestMapping("/hemocenter")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -32,6 +33,13 @@ public class HemocenterController {
 
         Hemocenter saved = hemocenterRepository.save(hemocenter);
         return ResponseEntity.status(201).body(saved);
+    }
+
+    @GetMapping("/{uuid}")
+    public ResponseEntity<Hemocenter> getHemocentro(@PathVariable int uuid){
+        Hemocenter hemocenter = hemocenterRepository.findByUuid(uuid);
+
+        return ResponseEntity.status(200).body(hemocenter);
     }
 
     @PostMapping("/current")
