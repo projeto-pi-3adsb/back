@@ -13,7 +13,7 @@ public class Stock {
     private LocalDate insertDate = LocalDate.now(); // data de inserção no estoque
     @NotBlank private String bloodType;
     @NotNull @PastOrPresent private LocalDate collectionDate; // data da coleta
-    @OneToOne(fetch = FetchType.LAZY) private Hemocenter hemocenter;
+    @OneToOne(cascade = CascadeType.ALL) private Hemocenter hemocenter;
 
     public Stock() {
     }

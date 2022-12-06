@@ -9,7 +9,7 @@ public class ScheduleHemocenter {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer uuid;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Hemocenter hemocenter;
     private LocalDate scheduledDate;
     private LocalTime scheduledTime;

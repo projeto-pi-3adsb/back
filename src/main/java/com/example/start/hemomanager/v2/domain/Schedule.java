@@ -13,11 +13,11 @@ public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer uuid;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Donor scheduledDonor;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Hemocenter hemocenter;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private ScheduleHemocenter scheduleHemocenter;
 
 
