@@ -8,8 +8,6 @@ import com.example.start.hemomanager.v2.repository.DonorRepository;
 import com.example.start.hemomanager.v2.repository.HemocenterRepository;
 import com.example.start.hemomanager.v2.repository.ScheduleHemocenterRepository;
 import com.example.start.hemomanager.v2.repository.ScheduleRepository;
-import com.example.start.hemomanager.v2.request.DonorFinderRequest;
-import com.example.start.hemomanager.v2.request.HemocenterFinderRequest;
 import com.example.start.hemomanager.v2.request.ScheduleHemocenterRequest;
 import com.example.start.hemomanager.v2.request.ScheduleRequest;
 import com.example.start.hemomanager.v2.response.ScheduleResponse;
@@ -24,7 +22,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController @RequestMapping("/schedules")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -109,7 +106,9 @@ public class ScheduleController {
 
     @GetMapping("/hemocenter/{id}")
     public ResponseEntity<List<Schedule>> findByHemocenterId(@PathVariable int id) {
-        List<Schedule> scheduleList = scheduleRepository.findByHemocenterId(id);
+        System.out.println("ID RECEBIDO" + id);
+        List<Schedule> scheduleList = scheduleRepository.findAllByHemocenter_Uuid(id);
+        System.out.println("LISTA" + scheduleList);
         if (scheduleList.isEmpty()) throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Não foram encontrados agendamentos.");
 
         return ResponseEntity.status(200).body(scheduleList);

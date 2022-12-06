@@ -1,6 +1,5 @@
 package com.example.start.hemomanager.v2.controller;
 
-import com.example.start.hemomanager.v2.domain.Donor;
 import com.example.start.hemomanager.v2.domain.Hemocenter;
 import com.example.start.hemomanager.v2.domain.ScheduleHemocenter;
 import com.example.start.hemomanager.v2.domain.dto.HemocenterDTO;
