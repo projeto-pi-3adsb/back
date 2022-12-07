@@ -4,6 +4,7 @@ import com.example.start.hemomanager.v2.domain.Stock;
 import com.example.start.hemomanager.v2.response.StockFullResponse;
 import com.example.start.hemomanager.v2.response.StockSimpleResponse;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -23,4 +24,7 @@ public interface StockRepository extends JpaRepository<Stock, Integer> {
 
     @Query("SELECT new com.example.start.hemomanager.v2.response.StockFullResponse(s.id, s.bloodType, s.collectionDate, s.insertDate) FROM stock s JOIN s.hemocenter h WHERE s.hemocenter.uuid =:uuid ORDER BY uuid asc")
     List<StockFullResponse> findByHemocenter(@Param("uuid") Integer uuid);
+
+    @Modifying @Query("DELETE FROM stock WHERE id = ?1")
+    void deleteReferenceById(Integer id);
 }

@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.transaction.Transactional;
 import java.io.*;
 import java.time.LocalDate;
 import java.util.*;
@@ -128,12 +129,13 @@ public class StockController {
         return saida;
     }
 
+    @Transactional
     @DeleteMapping("/{hemocenterId}/{bagId}")
     public ResponseEntity<String> deleteBag(@PathVariable int hemocenterId, @PathVariable Integer bagId) {
         if (!hemocenterRepository.existsById(hemocenterId)) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Hemocentro não encontrado.");
         if (!stockRepository.existsById(bagId)) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Bolsa não encontrada.");
 
-        stockRepository.deleteById(bagId);
+        stockRepository.deleteReferenceById(bagId);
         return ResponseEntity.status(200).body("Sucesso na exclusão da bolsa.");
     }
 }
