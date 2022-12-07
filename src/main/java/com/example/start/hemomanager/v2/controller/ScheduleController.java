@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -106,13 +107,11 @@ public class ScheduleController {
 
     @GetMapping("/hemocenter/{id}")
     public ResponseEntity<List<Schedule>> findByHemocenterId(@PathVariable int id) {
+        List<Schedule> scheduleRequest = scheduleRepository.findAllByHemocenter_Uuid(id);
 
-        //System.out.println("ID RECEBIDO >>  " + id);
-        List<Schedule> scheduleList = scheduleRepository.findAllByHemocenter_Uuid(id);
-        //System.out.println("LISTA" + scheduleList);
-        if (scheduleList.isEmpty()) throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Não foram encontrados agendamentos.");
+        if (scheduleRequest.isEmpty()) throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Não foram encontrados agendamentos.");
 
-        return ResponseEntity.status(200).body(scheduleList);
+        return ResponseEntity.status(200).body(scheduleRequest);
     }
 
     @DeleteMapping("/hour/{hemocenterId}/{id}")
@@ -124,12 +123,12 @@ public class ScheduleController {
         return ResponseEntity.status(200).body("Sucesso na exclusão do horário.");
     }
 
-    @DeleteMapping("/drop/{donorId}/{scheduleId}")
+    @Transactional @DeleteMapping("/drop/{donorId}/{scheduleId}")
     public ResponseEntity deleteSchedule(@PathVariable int donorId, @PathVariable Integer scheduleId) {
-        if (!donorRepository.existsById(donorId)) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Doador não encontrado.");
-        if (!scheduleRepository.existsById(scheduleId)) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Horário inválido.");
+        if (!donorRepository.existsById(donorId)) throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Doador não encontrado.");
+        if (!scheduleRepository.existsById(scheduleId)) throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Horário inválido.");
 
-        scheduleRepository.deleteById(scheduleId);
+        scheduleRepository.deleteReferenceByUuid(scheduleId);
         return ResponseEntity.status(200).body("Sucesso na exclusão do agendamento.");
     }
 }
