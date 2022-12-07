@@ -37,12 +37,12 @@ public class StockController {
         String bloodType = stockDTO.getBloodType();
         LocalDate collectionDate = stockDTO.getCollectionDate();
 
-        if (!hemocenterRepository.existsById(hemocenter)) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Hemocentro não encontrado.");
+        if (!hemocenterRepository.existsById(hemocenter)) throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Hemocentro não encontrado.");
 
         Stock stock = new Stock();
-        Hemocenter hemocenterToSave = new Hemocenter();
+        Hemocenter hemocenterToSave = hemocenterRepository.findByUuid(hemocenter);
 
-        hemocenterToSave.setUuid(hemocenter);
+//        hemocenterToSave.setUuid(hemocenter);
         stock.setHemocenter(hemocenterToSave);
         stock.setBloodType(bloodType);
         stock.setCollectionDate(collectionDate);

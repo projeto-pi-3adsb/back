@@ -1,5 +1,8 @@
 package com.example.start.hemomanager.v2.domain;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -13,7 +16,7 @@ public class Stock {
     private LocalDate insertDate = LocalDate.now(); // data de inserção no estoque
     @NotBlank private String bloodType;
     @NotNull @PastOrPresent private LocalDate collectionDate; // data da coleta
-    @OneToOne(cascade = CascadeType.ALL) private Hemocenter hemocenter;
+    @OneToOne(cascade = CascadeType.MERGE) @OnDelete(action = OnDeleteAction.CASCADE) private Hemocenter hemocenter;
 
     public Stock() {
     }
