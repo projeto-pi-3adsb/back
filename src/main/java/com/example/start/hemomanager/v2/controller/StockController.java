@@ -119,15 +119,14 @@ public class StockController {
         }
 
         StockFullResponse stock = stockList.get(stockList.size()-1);
-        saida.format("%s;%s;%s;%s;\n",
+        saida.format("%s;%s;%s;\n",
             stock.getBloodType(),
             stock.getCollectionDate(),
             stock.getInsertDate()
         );
 
         return saida;
-    }
-    @DeleteMapping("/{hemocenterId}/{bagId}")
+    }   @DeleteMapping("/{hemocenterId}/{bagId}")
     public ResponseEntity<String> deleteBag(@PathVariable int hemocenterId, @PathVariable Integer bagId) {
         if (!hemocenterRepository.existsById(hemocenterId)) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Hemocentro não encontrado.");
         if (!stockRepository.existsById(bagId)) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Bolsa não encontrada.");
