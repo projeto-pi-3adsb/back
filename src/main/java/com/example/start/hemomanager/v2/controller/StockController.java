@@ -53,9 +53,11 @@ public class StockController {
         return ResponseEntity.status(200).body(saved);
     }
 
-    @GetMapping
-    public ResponseEntity<List<Stock>> getAllBags() {
-        List<Stock> stockList = stockRepository.findAll();
+    @GetMapping("/{hemocenterId}")
+    public ResponseEntity<List<Stock>> getAllBags(@PathVariable int hemocenterId) {
+        if (hemocenterId <= 0) throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Nenhum hemocentro foi encontrado com esses dados.");
+
+        List<Stock> stockList = stockRepository.findAllByHemocenterUuid(hemocenterId);
         if (stockList.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Erro na busca do estoque.");
         }

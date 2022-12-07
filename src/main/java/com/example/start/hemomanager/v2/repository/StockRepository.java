@@ -27,4 +27,6 @@ public interface StockRepository extends JpaRepository<Stock, Integer> {
 
     @Modifying @Query("DELETE FROM stock WHERE id = ?1")
     void deleteReferenceById(Integer id);
+
+    List<Stock> findAllByHemocenterUuid(int hemocenterId);
 }
