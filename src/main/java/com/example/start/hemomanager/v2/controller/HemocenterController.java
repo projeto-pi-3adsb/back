@@ -87,7 +87,7 @@ public class HemocenterController {
 
         ScheduleHemocenter saved = scheduleHemocenterRepository.save(scheduleHemocenter);
 
-        return ResponseEntity.status(200).body(saved);
+        return ResponseEntity.status(201).body(saved);
     }
 
 }
