@@ -6,12 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.io.*;
 import java.nio.file.*;
@@ -21,14 +19,10 @@ import java.util.*;
 import java.io.IOException;
 import java.nio.file.Files;
 
-@RestController
-@RequestMapping("/platelets")
+@RestController @RequestMapping("/platelets")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class PlateletController {
-
-    @Autowired
-    private DonorRepository donorRepository;
-
+    @Autowired private DonorRepository donorRepository;
     private final Path root = Paths.get("uploads");
 
     @GetMapping("/dowload-csv")
@@ -136,12 +130,51 @@ public class PlateletController {
                 .body(file);
     }
 
-    @PostMapping("/upload-txt")
-    public ResponseEntity<Donor> uploadTxt(@RequestParam("file") MultipartFile file) throws IOException {
+    @PostMapping("/upload-csv")
+    public String uploadCsv(@RequestParam("file") MultipartFile file) throws IOException {
+        FileReader arq = null;
+        Scanner entrada = null;
+
         try {
             Files.copy(file.getInputStream(), this.root.resolve(Objects.requireNonNull(file.getOriginalFilename())));
 
-            FileReader arq = new FileReader(this.root.resolve(Objects.requireNonNull(file.getOriginalFilename())).toFile());
+            arq = new FileReader(file.getOriginalFilename());
+            entrada = new Scanner(arq).useDelimiter(";|\\n");
+
+            while(entrada.hasNext()){
+                Donor donor = new Donor(
+                        entrada.next(),
+                        entrada.next(),
+                        "123",
+                        entrada.next(),
+                        LocalDate.parse(entrada.next()),
+                        entrada.next(),
+                        entrada.next(),
+                        true
+                );
+
+                donorRepository.save(donor);
+            }
+
+            Files.delete(this.root.resolve(Objects.requireNonNull(file.getOriginalFilename())));
+        } catch (Exception e) {
+            Files.delete(this.root.resolve(Objects.requireNonNull(file.getOriginalFilename())));
+
+            if (e instanceof FileAlreadyExistsException) {
+                throw new RuntimeException("A file of that name already exists.");
+            }
+
+            return e.getMessage();
+        }
+        return "Sucesso";
+    }
+
+    @PostMapping("/upload-txt")
+    public String uploadTxt(@RequestParam("file") MultipartFile file) throws IOException {
+        try {
+            Files.copy(file.getInputStream(), this.root.resolve(Objects.requireNonNull(file.getOriginalFilename())));
+
+            FileReader arq = new FileReader(file.getOriginalFilename());
             BufferedReader lerArq = new BufferedReader(arq);
 
             Donor donor = new Donor(
@@ -157,8 +190,6 @@ public class PlateletController {
             donorRepository.save(donor);
 
             Files.delete(this.root.resolve(Objects.requireNonNull(file.getOriginalFilename())));
-
-            return ResponseEntity.status(200).body(donor);
         } catch (Exception e) {
             Files.delete(this.root.resolve(Objects.requireNonNull(file.getOriginalFilename())));
 
@@ -166,8 +197,9 @@ public class PlateletController {
                 throw new RuntimeException("A file of that name already exists.");
             }
 
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+            return e.getMessage();
         }
+        return "Sucesso";
     }
 
     @GetMapping("/dowload-modelo-csv")
