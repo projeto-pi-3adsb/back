@@ -122,7 +122,7 @@ public class StockController {
         }
 
         StockFullResponse stock = stockList.get(stockList.size()-1);
-        saida.format("%s;%s;%s;%s;\n",
+        saida.format("%s;%s;%s;\n",
             stock.getBloodType(),
             stock.getCollectionDate(),
             stock.getInsertDate()
